@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper标签要指定namespace属性，不然会报错，可看做包名-->
+<mapper namespace="com.mybatis.model.Fund">
+    <select id="findFundById" parameterType="int" resultType="com.mybatis.model.Fund">
+        select * from fund where id = #{id}
+    </select>
+
+    <select id="findFundAll" resultType="com.mybatis.model.Fund">
+        select * from fund
+    </select>
+
+    <insert id="insertFund" parameterType="com.mybatis.model.Fund">
+        insert into fund(name,code) values(#{name},#{code})
+    </insert>
+
+    <delete id="deleteFundById" parameterType="int">
+        delete from fund where id=#{id}
+    </delete>
+
+    <update id="updateFundPassword" parameterType="com.mybatis.model.Fund">
+        update fund set name=#{name} where id=#{id}
+    </update>
+</mapper>

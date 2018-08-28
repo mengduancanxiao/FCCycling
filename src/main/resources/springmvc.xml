@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+       default-lazy-init="true">
+
+    <!-- spring自动扫描base-pack下面或者子包下面的java文件，
+         如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean
+    -->
+    <context:component-scan base-package="com.spring.controller"/>
+
+    <!-- 静态资源处理servlet配置,每次请求过来，先经过DefaultServletHttpRequestHandler判断是
+         否是静态文件，如果是静态文件，则进行处理，不是则放行交由DispatcherServlet控制器处理。
+    -->
+    <mvc:default-servlet-handler/>
+
+    <!--启用spring的一些annotation -->
+    <!--<context:annotation-config/>-->
+
+    <!--会自动注册RequestMappingHandlerMapping、RequestMappingHandlerAdapter与xceptionHandlerExceptionResolver三个bean，负责将请求映射到类和方法中
+    	当使用mvc:view-controller标签时一定要加入mvc:annotation-driven，不然会使requestMapping失效-->
+    <mvc:annotation-driven/>
+
+    <!--静态资源映射-->
+    <!--本项目把静态资源放在了webapp的statics目录下，资源映射如下-->
+    <!--
+    <mvc:resources mapping="/css/**" location="/WEB-INF/statics/css/"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/statics/js/"/>
+    <mvc:resources mapping="/image/**" location="/WEB-INF/statics/image/"/>
+    -->
+
+    <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
+    <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+        <!--<property name="exposeContextBeansAsAttributes" value="true"/>-->
+    </bean>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:jdbc.properties"/>
+    </bean>
+
+    <!--数据源-连接数据库的基本信息,读取jdbc.properties资源文件中-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 最大连接数 -->
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <!-- 最大可空闲 -->
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <!-- 最小空闲连接-->
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <!-- 初始化连接-->
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <!-- 最大等待秒数，单位为毫秒， 超过时间会报出错误信息 -->
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <!--removeAbandoned: 是否自动回收超时连接-->
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+        <!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+        <!-- 连接被泄露时是否打印 -->
+        <property name="logAbandoned" value="${jdbc.logAbandoned}"/>
+    </bean>
+
+    <!-- mybatis的SqlSession工厂,引用数据源dataSource,加载Mybatis配置文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 自动扫描目录下所有mapper映射文件 -->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/*.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 事务相关控制 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置事务管理的模板-->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"></property>
+        <!--定义事务隔离级别,-1表示使用数据库默认级别-->
+        <property name="isolationLevelName" value="ISOLATION_DEFAULT"></property>
+        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"></property>
+    </bean>
+    <!-- 注解方式配置事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
