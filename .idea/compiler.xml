@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="FC-Cycling" />
         <module name="FCCycling" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FC-Cycling" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
