@@ -33,10 +33,10 @@
 
     <!--静态资源映射-->
     <!--本项目把静态资源放在了webapp的statics目录下，资源映射如下-->
-    <mvc:resources mapping="/css/**" location="/css/"/>
-    <mvc:resources mapping="/js/**" location="/js/"/>
-    <mvc:resources mapping="/images/**" location="/images/"/>
-    <mvc:resources mapping="/*.html" location="/"/>
+    <mvc:resources mapping="view/css/**" location="view/css/"/>
+    <mvc:resources mapping="view/js/**" location="view/js/"/>
+    <mvc:resources mapping="view/images/**" location="view/images/"/>
+    <mvc:resources mapping="view/*.html" location="view/"/>
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
