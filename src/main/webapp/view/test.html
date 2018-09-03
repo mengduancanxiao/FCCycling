@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!--<link rel="stylesheet" href="css/tabStyle.css" type="text/css">-->
+    <link rel="stylesheet" href="css/design.css" type="text/css">
+
+    <style type="text/css">
+        .tabs a:hover {
+            border-bottom-color: blue;
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+
+        .tabs {
+            overflow: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .tabs a {
+            float: left;
+            position: relative;
+            padding: 0 10px;
+            height: 0;
+            line-height: 25px;
+            text-decoration: none;
+            color: #fff;
+            border-bottom: 25px solid #3D3D3D;
+            font-size: 22px;
+            border-bottom-color: #777 \9;
+            opacity: .3;
+            filter: alpha(opacity=30);
+        }
+
+        .tabs .current {
+            border-bottom-color: blue;
+        }
+    </style>
+
+    <script src="js/jquery183.min.js"></script>
+    <script>
+        $(function () {
+            loadTab();
+        });
+
+        function loadTab() {
+            $(".content > div").hide();
+            $(".tabs").each(function () {
+                $(this).find("li:first a").addClass("current");
+            });
+            $(".content").each(function () {
+                $(this).find("div:first").fadeIn();
+            });
+            $(".tabs a").on("click", function (e) {
+                e.preventDefault();
+                var name = $(this).attr("name");
+                resetTabs(this, name);
+            });
+        }
+
+        function resetTabs(obj, name) {
+            if (name == ".tab1_1") {
+                $(".tab1_2").hide();
+                $(".tabs").find("li:first a").addClass("current");
+                $(".tabs").find("li:last a").removeClass("current");
+            } else {
+                $(".tab1_1").hide();
+                $(".tabs").find("li:first a").removeClass("current");
+                $(".tabs").find("li:last a").addClass("current");
+            }
+            $(name).fadeIn();
+        }
+
+    </script>
+</head>
+<body>
+<div style="float:left; width: 50%; height: 430px;">
+    <ul class="tabs">
+        <li><a href="#" name=".tab1_1">Change Colors</a></li>
+        <li><a href="#" name=".tab1_2">Change Logo</a></li>
+    </ul>
+    <div class="content">
+        <div class="tab1_1">
+            <div class="colordiv" style="background-color: red;"></div>
+            <div class="colordiv" style="background-color: yellow;"></div>
+            <div class="colordiv" style="background-color: blue;"></div>
+            <div class="colordiv" style="background-color: green;"></div>
+            <div class="colordiv" style="background-color: white;"></div>
+            <div class="colordiv" style="background-color: purple;"></div>
+            <div class="colordiv" style="background-color: black;"></div>
+        </div>
+        <div class="tab1_2">
+            <div>Change Logo</div>
+        </div>
+    </div>
+</div>
+<!--<div class="testing">-->
+<!--<div class="intest">test</div>-->
+<!--</div>-->
+</body>
+</html>

@@ -30,7 +30,7 @@
 }
 
 .tabs a:hover,.tabs a:focus {
-	border-bottom-color: #2ac7e1;
+	border-bottom-color: #2D88CF;
 	opacity: 1;
 	filter: alpha(opacity =       100);
 }
@@ -41,7 +41,7 @@
 
 .tabs .current {
 	z-index: 3;
-	border-bottom-color: #3d3d3d;
+	border-bottom-color: #2D88CF;
 	opacity: 1;
 	filter: alpha(opacity =       100);
 }

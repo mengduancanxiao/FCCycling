@@ -1,0 +1,7 @@
+.colordiv {
+    width: 50px;
+    height: 40px;
+    float: left;
+    border: thin solid black;
+    margin-left: 5px;
+}

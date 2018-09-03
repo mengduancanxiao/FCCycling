@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsiveslides.css">
     <link rel="stylesheet" href="css/tabStyle.css" type="text/css">
+    <link rel="stylesheet" href="css/design.css" type="text/css">
 
     <script src="js/jquery-latest.min.js"></script>
     <script src="js/script.js"></script>
@@ -54,29 +55,38 @@
             loadTab();
         });
 
+        function resetTabs(obj, name) {
+            if (name == ".tab1_1") {
+                $(".tab1_2").hide();
+                $(".tabs").find("li:first a").addClass("current");
+                $(".tabs").find("li:last a").removeClass("current");
+            } else {
+                $(".tab1_1").hide();
+                $(".tabs").find("li:first a").removeClass("current");
+                $(".tabs").find("li:last a").addClass("current");
+            }
+            $(name).fadeIn();
+        }
+
+        function loadTab() {
+            $(".content > div").hide();
+            $(".tabs").each(function () {
+                $(this).find("li:first a").addClass("current");//设置tab页样式
+            });
+            $(".content").each(function () {
+                $(this).find("div:first").fadeIn();
+            });
+            $(".tabs a").on("click", function (e) {
+                e.preventDefault();
+                var name = $(this).attr("name");
+                resetTabs(this, name);
+            });
+        }
 
     </script>
-
-
-    <!--[if lt IE 8]>
-    <div style=' clear: both; text-align:center; position: relative;'>
-        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"
-                 height="42" width="820"
-                 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
-        </a>
-    </div>
-    <![endif]-->
-    <!--[if lt IE 9]>
-    <script src="js/html5.js"></script>
-    <script src="js/css3-mediaqueries.js"></script>
-    <![endif]-->
-
 </head>
-<body>
+<body style="background-color: white;">
 <div class="wrap-body">
-
-    <!--////////////////////////////////////Header-->
     <header class="bg-theme">
         <div class="wrap-header zerogrid">
             <div class="row">
@@ -93,10 +103,8 @@
         </div>
     </header>
 
-
-    <!--////////////////////////////////////Container-->
     <div>
-        <div style="width: 100%;height: 50px;border: thin solid black; padding:10px">
+        <div style="width: 100%;height: 50px; padding:10px;">
             <h1>Design</h1>
         </div>
 
@@ -106,23 +114,23 @@
                 <img src="images/all-1.png" alt="">
             </div>
             <!-- Middle -->
-            <div style="float:left;width: 50px;height: 430px;">
+            <div style="float:left; width: 50px; height: 430px;background-color: white;">
             </div>
             <!-- Right -->
-            <div style="float:left;width: 50%;height: 430px;">
+            <div style="float:left; width: 50%; height: 430px;">
                 <ul class="tabs">
                     <li><a href="#" name=".tab1_1">Change Colors</a></li>
                     <li><a href="#" name=".tab1_2">Change Logo</a></li>
                 </ul>
                 <div class="content">
                     <div class="tab1_1">
-                        <div style="width:50px; height:40px; float:left; border:thin solid black; margin-left:5px; background-color: red;"></div>
-                        <div style="width:50px; height:40px; float:left; margin-left:5px; background-color: yellow;"></div>
-                        <div style="width:50px; height:40px; float:left; margin-left:5px; background-color: blue;"></div>
-                        <div style="width:50px; height:40px; float:left; margin-left:5px; background-color: green;"></div>
-                        <div style="width:50px; height:40px; float:left; margin-left:5px; background-color: white;"></div>
-                        <div style="width:50px; height:40px; float:left; margin-left:5px; background-color: purple;"></div>
-                        <div style="width:50px; height:40px; float:left; margin-left:5px; background-color: black;"></div>
+                        <div class="colordiv" style="background-color: red;"></div>
+                        <div class="colordiv" style="background-color: yellow;"></div>
+                        <div class="colordiv" style="background-color: blue;"></div>
+                        <div class="colordiv" style="background-color: green;"></div>
+                        <div class="colordiv" style="background-color: white;"></div>
+                        <div class="colordiv" style="background-color: purple;"></div>
+                        <div class="colordiv" style="background-color: black;"></div>
                     </div>
                     <div class="tab1_2">
                         Change Logo
@@ -131,24 +139,6 @@
             </div>
         </div>
     </div>
-
-    <!--////////////////////////////////////Footer-->
-    <footer>
-        <div class="zerogrid">
-            <div class="wrap-footer">
-                <div class="row">
-                    <h3>Contact</h3>
-                    <span>Phone / +80 999 99 9999 </span></br>
-                    <span>Email / info@domain.com  </span></br>
-                    <span>Studio / Moonshine St. 14/05 Light City </span></br>
-                    <span><strong>Copyright &copy; 2016.Company name All rights reserved.More Templates <a
-                            href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-                            href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></strong></span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
 </div>
 </body>
 </html>
