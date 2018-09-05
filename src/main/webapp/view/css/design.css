@@ -4,4 +4,5 @@
     float: left;
     border: thin solid black;
     margin-left: 5px;
+    cursor: pointer;
 }
