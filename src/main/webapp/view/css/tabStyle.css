@@ -12,6 +12,13 @@
 	border-bottom: 1px solid #3d3d3d;
 }
 
+.names_tabs li {
+	float: inherit;
+	margin: 0 0 0 0;
+	border-bottom: 1px solid #3d3d3d;
+    cursor: pointer;
+}
+
 .tabs a {
 	float: left;
 	position: relative;
@@ -50,7 +57,7 @@
 	background: #fff;
 	padding-top: 10px;
 	font-size: 22px;
-	height:405px;
+	height:400px;
 }
 
 .content h2,.content h3,.content p {

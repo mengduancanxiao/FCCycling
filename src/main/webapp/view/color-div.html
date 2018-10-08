@@ -1,0 +1,37 @@
+﻿<link rel="stylesheet" href="css/design.css" type="text/css">
+<!-- 调色板CSS -->
+<link rel="stylesheet" href="common/cxColor/css/jquery.cxcolor.css">
+
+<script src="js/jquery183.min.js"></script>
+<!-- 调色板JS -->
+<script type="text/javascript" src="common/cxColor/js/jquery.cxcolor.js"></script>
+
+
+<!--<div id="red" class="colordiv" style="background-color: red;" onClick="changeborder('red');"></div>
+<div id="yellow"  class="colordiv" style="background-color: yellow;" onClick="changeborder('yellow');"></div>
+<div id="blue"  class="colordiv" style="background-color: blue;" onClick="changeborder('blue');"></div>
+<div id="green"  class="colordiv" style="background-color: green;" onClick="changeborder('green');"></div>
+<div id="white"  class="colordiv" style="background-color: white;" onClick="changeborder('white');"></div>
+<div id="purple"  class="colordiv" style="background-color: purple;" onClick="changeborder('purple');"></div>
+<div id="black"  class="colordiv" style="background-color: black;" onClick="changeborder('black');"></div>-->
+<input id="color_a" name="mycolor" type="text" class="input_cxcolor" readonly/>
+
+<script type="text/javascript">
+	var selectcolor = "";
+	
+	$(function () {
+		//默认展示调色板
+		$("#color_a").cxColor().show();
+	});
+
+	/*function changeborder(color){
+		$("div").css({"width":"50px","height":"40px"});
+		$("#" + color).css({"width":"60px","height":"45px"});
+		selectcolor = color;
+	}*/
+	
+	//回调函数,返回选中色号
+    function callbackdata() {
+        return $("#color_a").cxColor().color();
+    } 
+</script>

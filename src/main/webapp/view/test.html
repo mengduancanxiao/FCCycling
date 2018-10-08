@@ -43,6 +43,7 @@
     </style>
 
     <script src="js/jquery183.min.js"></script>
+	<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
     <script>
         $(function () {
             loadTab();
@@ -76,6 +77,24 @@
             $(name).fadeIn();
         }
 
+		function test(){
+			var content2 = "color-div.html";
+		
+			//在这里面输入任何合法的js语句
+			layer.open({
+			  type: 2, //Page层类型
+			  area: ['500px', '300px'],
+			  title: 'select color',
+			  shade: 0.6, //遮罩透明度
+			  anim: 1, //0-6的动画形式，-1不开启
+			  content: content2,
+			  btn: ['Sure','Cancel'],
+			  yes: function (index) {
+			  	clickcolor("red");
+				layer.close(index);
+			  }
+			}); 
+		}
     </script>
 </head>
 <body>
@@ -86,7 +105,7 @@
     </ul>
     <div class="content">
         <div class="tab1_1">
-            <div class="colordiv" style="background-color: red;"></div>
+            <div class="colordiv" style="background-color: red;" onClick="test();"></div>
             <div class="colordiv" style="background-color: yellow;"></div>
             <div class="colordiv" style="background-color: blue;"></div>
             <div class="colordiv" style="background-color: green;"></div>
