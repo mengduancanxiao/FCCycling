@@ -1,4 +1,3 @@
-
 // WebUploader实例
 var uploader;
 var fileNum = 1;
@@ -10,61 +9,42 @@ var fileSize = 0; // 添加的文件总大小
 var picList = new Array(); //初始绑定的图片列表
 var picList_source = new Array(); //初始绑定的图片原名
 function webuploadInit(t) {
-    if (t != null)
+    if (t != null) {
         uptype = t;
-
-
+    }
     var $ = jQuery,    // just in case. Make sure it's not an other libaray.
-
         $wrap = $('#uploader'),
-
         // 图片容器
-        $queue = $('<ul class="filelist"></ul>')
-            .appendTo($wrap.find('.queueList')),
-
+        $queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList')),
         // 状态栏，包括进度和控制按钮
         $statusBar = $wrap.find('.statusBar'),
-
         // 文件总体选择信息。
         $info = $statusBar.find('.info'),
-
         // 上传按钮
         $upload = $wrap.find('.uploadBtn'),
-
         // 没选择文件之前的内容。
         $placeHolder = $wrap.find('.placeholder'),
-
         // 总体进度条
         $progress = $statusBar.find('.progress').hide(),
-
-
-
-
         // 优化retina, 在retina下这个值是2
         ratio = window.devicePixelRatio || 1,
-
         // 缩略图大小
         thumbnailWidth = 110 * ratio,
         thumbnailHeight = 110 * ratio,
-
         // 可能有pedding, ready, uploading, confirm, done.
         state = 'pedding',
-
         // 所有文件的进度信息，key为file id
         percentages = {},
-
         supportTransition = (function () {
             var s = document.createElement('p').style,
                 r = 'transition' in s ||
-                      'WebkitTransition' in s ||
-                      'MozTransition' in s ||
-                      'msTransition' in s ||
-                      'OTransition' in s;
+                    'WebkitTransition' in s ||
+                    'MozTransition' in s ||
+                    'msTransition' in s ||
+                    'OTransition' in s;
             s = null;
             return r;
         })();
-
-
 
     if (!WebUploader.Uploader.support()) {
         alert('Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
@@ -75,17 +55,27 @@ function webuploadInit(t) {
     var ext;
     var mimetyep;
     switch (uptype) {
-        case 1: ext = 'gif,jpg,jpeg,bmp,png'; mimetyep = 'image/jps,image/jpeg,/image/png'; break;
-        case 2: ext = 'mp4,avi'; mimetyep = 'video/mp4,video/avi'; break;
-        case 3: ext = 'apk'; mimetyep = 'application/vnd.android.package-archive'; break;
-        default: break;
+        case 1:
+            ext = 'gif,jpg,jpeg,bmp,png';
+            mimetyep = 'image/jps,image/jpeg,/image/png';
+            break;
+        case 2:
+            ext = 'mp4,avi';
+            mimetyep = 'video/mp4,video/avi';
+            break;
+        case 3:
+            ext = 'apk';
+            mimetyep = 'application/vnd.android.package-archive';
+            break;
+        default:
+            break;
     }
     uploader = WebUploader.create({
-        formData: { guid: GUID },
+        formData: {guid: GUID},
         threads: 1, //上传并发数
         pick: {
             id: '#filePicker',
-            label: (uptype == '1' ? '点击选择图片' : '点击选择文件')
+            label: (uptype == '1' ? 'click to select a picture' : 'click to select a picture')
         },
         dnd: '#uploader .queueList',
         paste: document.body,
@@ -121,10 +111,10 @@ function webuploadInit(t) {
     function addFile(file) {
         console.log(file);
         var $li = $('<li id="' + file.id + '">' +
-                '<p class="title">' + file.name + '</p>' +
-                '<p class="imgWrap"></p>' +
-                '<p class="progress"><span></span></p>' +
-                '</li>'),
+            '<p class="title">' + file.name + '</p>' +
+            '<p class="imgWrap"></p>' +
+            '<p class="progress"><span></span></p>' +
+            '</li>'),
 
             $btns = $('<div class="file-panel">' +
                 '<span class="cancel">删除</span>' +
@@ -170,13 +160,14 @@ function webuploadInit(t) {
                 var html = '<div id="box' + count + '" class="box">  <img src="' + src + '" />  <div id="scale' + count + '" class="scale"></div> </div>';
                 $("#addBox").append(html);
                 var box = document.getElementById("box" + count);
-                var fa = document.getElementById('father');
+                var fa = document.getElementById('addBox');
                 var scale = document.getElementById("scale" + count);
                 // 图片移动效果
                 box.onmousedown = function (ev) {
                     var oEvent = ev;
                     // 浏览器有一些图片的默认事件,这里要阻止
                     oEvent.preventDefault();
+                    // console.log("", "left:" + box.offsetLeft + " top:" + box.offsetTop);
                     var disX = oEvent.clientX - box.offsetLeft;
                     var disY = oEvent.clientY - box.offsetTop;
                     fa.onmousemove = function (ev) {
@@ -273,11 +264,11 @@ function webuploadInit(t) {
         });
 
         $li.on('mouseenter', function () {
-            $btns.stop().animate({ height: 30 });
+            $btns.stop().animate({height: 30});
         });
 
         $li.on('mouseleave', function () {
-            $btns.stop().animate({ height: 0 });
+            $btns.stop().animate({height: 0});
         });
 
         $btns.on('click', 'span', function () {
@@ -376,8 +367,8 @@ function webuploadInit(t) {
         } else {
             stats = uploader.getStats();
             text = '共' + fileCount + '个文件（' +
-                    WebUploader.formatSize(fileSize) +
-                    '），已上传' + stats.successNum + '个';
+                WebUploader.formatSize(fileSize) +
+                '），已上传' + stats.successNum + '个';
 
             if (stats.uploadFailNum) {
                 text += '，失败' + stats.uploadFailNum + '个';
@@ -511,16 +502,16 @@ function webuploadInit(t) {
     // 文件上传成功,合并文件。
     uploader.on('uploadSuccess', function (file, response) {
         if (response.chunked) {
-            $.post("/API/Plug/UpLoad.ashx?action=MergeFiles", { guid: GUID, fileExt: response.f_ext, uptype: uptype },
-            function (data) {
-                if (data.hasError) {
-                    alert('文件合并失败！');
-                } else {
-                    $("#upSuccessList").append("<input type='hidden' name='successfile' value='" + data.filename + "' id='s_" + file.id + "'>");
-                    $("#upSuccessList").append("<input type='hidden' name='successfile_source' value='" + data.filename_source + "' id='ss_" + file.id + "'>");
-                }
+            $.post("/API/Plug/UpLoad.ashx?action=MergeFiles", {guid: GUID, fileExt: response.f_ext, uptype: uptype},
+                function (data) {
+                    if (data.hasError) {
+                        alert('文件合并失败！');
+                    } else {
+                        $("#upSuccessList").append("<input type='hidden' name='successfile' value='" + data.filename + "' id='s_" + file.id + "'>");
+                        $("#upSuccessList").append("<input type='hidden' name='successfile_source' value='" + data.filename_source + "' id='ss_" + file.id + "'>");
+                    }
 
-            });
+                });
         }
         else {
             $("#upSuccessList").append("<input type='hidden' name='successfile' value='" + response.filename + "' id='s_" + file.id + "'>");
@@ -533,14 +524,9 @@ function webuploadInit(t) {
     uploader.on('uploadAccept', function (file, response) {
         if (response.hasError) {
             // 通过return false来告诉组件，此文件上传有错。
-
-
             return false;
         }
     });
-
-
-
 
     uploader.onError = function (code) {
         if (code == "Q_EXCEED_NUM_LIMIT")
@@ -634,8 +620,8 @@ function webuploadInit(t) {
 };
 
 var downPath = "";
-function downFile(name) {
 
+function downFile(name) {
     var url = downPath + name;
     //location.href = url;
     window.open(url);

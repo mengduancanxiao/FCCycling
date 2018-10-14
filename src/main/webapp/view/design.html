@@ -30,10 +30,10 @@
     <link rel="stylesheet" href="css/design.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/SyntaxHighlighter.css">
     <link rel="stylesheet" type="text/css" href="css/clothes.css">
-    <link rel="stylesheet" type="text/css" href="css/xcConfirm.css" />
-	
-	<!-- 调色板CSS -->
-	<link rel="stylesheet" href="common/cxColor/css/jquery.cxcolor.css">
+    <link rel="stylesheet" type="text/css" href="css/xcConfirm.css"/>
+
+    <!-- 调色板CSS -->
+    <link rel="stylesheet" href="common/cxColor/css/jquery.cxcolor.css">
     <style type="text/css">
         .sgBtn {
             width: 50px;
@@ -61,14 +61,14 @@
     <script type="text/javascript" src="js/res/clothesMapConfig.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/xcConfirm.js" charset="utf-8"></script>
-	<!-- layer JS -->
-    <script src="common/layer/layer.js"  charset="utf-8"></script>
-	<!-- 调色板JS -->
-	<script type="text/javascript" src="common/cxColor/js/jquery.cxcolor.js"></script>
+    <!-- layer JS -->
+    <script src="common/layer/layer.js" charset="utf-8"></script>
+    <!-- 调色板JS -->
+    <script type="text/javascript" src="common/cxColor/js/jquery.cxcolor.js"></script>
 
     <!-- 上传控件start-->
-    <link rel="stylesheet" type="text/css" href="common/webuploader/css/webuploader.css" />
-    <link rel="stylesheet" type="text/css" href="common/webuploader/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="common/webuploader/css/webuploader.css"/>
+    <link rel="stylesheet" type="text/css" href="common/webuploader/css/demo.css"/>
     <!-- 上传控件js -->
     <script type="text/javascript" src="common/webuploader/js/webuploader.min.js"></script>
     <script type="text/javascript" src="common/webuploader/js/demo.js"></script>
@@ -85,8 +85,11 @@
     <!-- 上传控件end-->
     <style>
         .box {
-            width: 100px;
-            height: 100px;
+            width: 30px;
+            height: 30px;
+            left: 0px;
+            top: 0px;
+            right: 30px;
             background-color: white;
             position: absolute;
         }
@@ -139,7 +142,7 @@
 
             loadTab();
 
-            map = $('#close').SVGMap({
+            map = $('#clothes').SVGMap({
                 mapName: 'close',
                 mapWidth: 500,
                 mapHeight: 429,
@@ -184,7 +187,7 @@
         }
 
         function clickcolor(color) {
-			click_id = 2;
+            click_id = 2;
             if (click_id != null) {
                 map.externalData["t" + click_id].animate({
                     fill: color
@@ -226,94 +229,98 @@
             });
         }
 
-		//弹出颜色选择框
-		function selectcolor(){			
-			var content = "color-div.html";
-		
-			//在这里面输入任何合法的js语句
-			layer.open({
-			  type: 2, //Page层类型
-			  area: ['310px', '300px'],
-			  title: 'select color',
-			  shade: 0.6, //遮罩透明度
-			  anim: 1, //0-6的动画形式，-1不开启
-			  content: content,
-			  btn: ['OK','Cancel'],
-			  yes: function (index) {
-			  	var selectcolor = window["layui-layer-iframe" + index].callbackdata();
-			  	clickcolor(selectcolor);
-				layer.close(index);
-			  }
-			});  
-		}
+        //弹出颜色选择框
+        function selectcolor() {
+            var content = "color-div.html";
+
+            //在这里面输入任何合法的js语句
+            layer.open({
+                type: 2, //Page层类型
+                area: ['310px', '300px'],
+                title: 'select color',
+                shade: 0.6, //遮罩透明度
+                anim: 1, //0-6的动画形式，-1不开启
+                content: content,
+                btn: ['OK', 'Cancel'],
+                yes: function (index) {
+                    var selectcolor = window["layui-layer-iframe" + index].callbackdata();
+                    clickcolor(selectcolor);
+                    layer.close(index);
+                }
+            });
+        }
 
     </script>
 </head>
 <body style="background-color: white;">
-    <div class="wrap-body">
-        <header class="bg-theme">
-            <div class="wrap-header zerogrid">
-                <div class="row">
-                    <div id="cssmenu">
-                        <ul>
-                            <li class='active'><a href="index.html">Home</a></li>
-                            <li><a href="design.html">Design</a></li>
-                            <li><a href="single.html">About</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <a href='index.html' class="logo"><img src="images/logo.png" /></a>
-                </div>
-            </div>
-        </header>
-
-        <div>
-            <div style="width: 99%; height: 468px; float: left; margin: 5px; text-align: center;" id="father" class="father">
-                <!-- Left -->
-                <div style="float:left; width: 40%;height: 533px; border:thin solid black; text-align:center;">
-                    <!--<div style="float:left; width: 500px;height: 433px;"></div>-->
-                    <div id="close" style="width: 500px;height: 429px; background:url(images/all-1.png);margin:0 auto;"></div>
-                    <div id="addBox" style=" margin-top:-310px; margin-left:170px;">
-
-                    </div>
-                </div>
-                <!-- Middle -->
-                <!--<div style="float:left; width: 150px; height: 429px;background-color: white;">
-                </div>-->
-                <!-- Right -->
-                <div style="float:left; width: 60%; height: 533px; border:thin solid black;  border-left: none;">
-                    <ul class="tabs">
-                        <li><a href="#" name=".tab1_1">Change Colors</a></li>
-                        <li><a href="#" name=".tab1_2">Change Logo</a></li>
+<div class="wrap-body">
+    <header class="bg-theme">
+        <div class="wrap-header zerogrid">
+            <div class="row">
+                <div id="cssmenu">
+                    <ul>
+                        <li class='active'><a href="index.html">Home</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="single.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
-                    <div class="content">
-                        <div class="tab1_1">
-							<ul class="names_tabs" style="text-align:left; margin:10px;">
-								<li>BOTTOM OPENING 下摆</li>
-								<li onClick="selectcolor();">ACROSS FT（front) 前上胸</li>
-								<li>ACROSS BK（back) 后上胸</li>
-								<li>SLEEVE OPENING 袖口</li>
-								<li>Neck finish 领边</li>
-								<li>Leg opening 脚口</li>
-							</ul>
-						
-                            <!--<div class="colordiv" style="background-color: red;" onClick="clickcolor('red');"></div>
-                            <div class="colordiv" style="background-color: yellow;" onClick="clickcolor('yellow');"></div>
-                            <div class="colordiv" style="background-color: blue;" onClick="clickcolor('blue');"></div>
-                            <div class="colordiv" style="background-color: green;" onClick="clickcolor('green');"></div>
-                            <div class="colordiv" style="background-color: white;" onClick="clickcolor('white');"></div>
-                            <div class="colordiv" style="background-color: purple;" onClick="clickcolor('purple');"></div>
-                            <div class="colordiv" style="background-color: black;" onClick="clickcolor('black');"></div>-->
-                        </div>
-                        <div class="tab1_2">
-                            <div class="page-container">
-                                <div id="upSuccessList">
-                                </div>
+                </div>
+                <a href='index.html' class="logo"><img src="images/logo.png"/></a>
+            </div>
+        </div>
+    </header>
+
+    <div>
+        <div style="width: 99%; height: 468px; float: left; margin: 5px; text-align: center;" id="father"
+             class="father">
+            <!-- Left -->
+            <div style="float:left; width: 40%;height: 533px; border:thin solid black; text-align:center;">
+                <!--<div style="float:left; width: 500px;height: 433px;"></div>-->
+                <div id="clothes"
+                     style="width: 500px;height: 429px; background:url(images/all-1.png);margin:0 auto;position: relative;z-index: 1;"></div>
+                <div id="addBox"
+                     style="margin-top:-320px; margin-left:220px; position: relative; z-index: 2;width: 40px;height: 30px;border:solid thin black;"></div>
+                <div id="addBox2"
+                     style="margin-top:-320px; margin-left:420px; position: relative; z-index: 3;width: 80px;height: 60px;border:solid thin black;"></div>
+
+            </div>
+            <!-- Middle -->
+            <!--<div style="float:left; width: 150px; height: 429px;background-color: white;">
+            </div>-->
+            <!-- Right -->
+            <div style="float:left; width: 60%; height: 533px; border:thin solid black;  border-left: none;">
+                <ul class="tabs">
+                    <li><a href="#" name=".tab1_1">Change Colors</a></li>
+                    <li><a href="#" name=".tab1_2">Change Logo</a></li>
+                </ul>
+                <div class="content">
+                    <div class="tab1_1">
+                        <ul class="names_tabs" style="text-align:left; margin:10px;">
+                            <li>BOTTOM OPENING 下摆</li>
+                            <li onClick="selectcolor();">ACROSS FT（front) 前上胸</li>
+                            <li>ACROSS BK（back) 后上胸</li>
+                            <li>SLEEVE OPENING 袖口</li>
+                            <li>Neck finish 领边</li>
+                            <li>Leg opening 脚口</li>
+                        </ul>
+
+                        <!--<div class="colordiv" style="background-color: red;" onClick="clickcolor('red');"></div>
+                        <div class="colordiv" style="background-color: yellow;" onClick="clickcolor('yellow');"></div>
+                        <div class="colordiv" style="background-color: blue;" onClick="clickcolor('blue');"></div>
+                        <div class="colordiv" style="background-color: green;" onClick="clickcolor('green');"></div>
+                        <div class="colordiv" style="background-color: white;" onClick="clickcolor('white');"></div>
+                        <div class="colordiv" style="background-color: purple;" onClick="clickcolor('purple');"></div>
+                        <div class="colordiv" style="background-color: black;" onClick="clickcolor('black');"></div>-->
+                    </div>
+                    <div class="tab1_2">
+                        <div class="page-container">
+                            <div id="method1">
+                                <div style="text-align: left"><label>Method1:</label></div>
+                                <div id="upSuccessList"></div>
                                 <div id="uploader" class="wu-example">
                                     <div class="queueList">
                                         <div id="dndArea" class="placeholder">
                                             <div id="filePicker"></div>
-                                            <p>或将文件拖到这里</p>
                                         </div>
                                     </div>
 
@@ -330,53 +337,122 @@
                                     </div>
                                 </div>
                             </div>
-							<br/><br />
-							<span><a onclick='javascript: Show()'>ShowImg</a></span>
-							<br />
-							<span><a onclick='javascript: Down()'>DownImg</a></span>
+
+                            <div id="method2">
+                                <div style="text-align: left"><label style="font-size: 30px;font-family: bold;">Method2:</label></div>
+                                <div id="method2-font" style="text-align: left; padding: 20px;">
+                                    <input id="logovalue" type="text" oninput="OnInput(event);" style="width:250px; border: thin solid black" placeholder="input your logo content"/>
+                                    <br/>
+                                    font-family:
+                                    <select id="font-family">
+                                        <option value="Calibri">Calibri</option>
+                                        <option value="Consolas" selected="selected">Consolas</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Arial">Arial</option>
+                                    </select>
+                                    <br/>
+                                    font-size:
+                                    <select id="font-size">
+                                        <option value="10">10</option>
+                                        <option value="12" selected="selected">12</option>
+                                        <option value="14">14</option>
+                                        <option value="16">16</option>
+                                        <option value="18">18</option>
+                                        <option value="20">20</option>
+                                    </select>
+
+                                </div>
+                            </div>
                         </div>
-                        
+                        <br/>
+                        <span><a onclick='javascript: Show()'>ShowImg</a></span>
+                        <br/>
+                        <span><a onclick='javascript: Down()'>DownImg</a></span>
+
                     </div>
+
                 </div>
             </div>
         </div>
-
-    </div>
-    <div id="watch" style="text-align:center;">
-        <a id="tttt"></a>
     </div>
 
-    <!--显示与下载png-->
-    <script type="text/javascript">
-        function Show() {
-            var svgXml = $('.svggroup').html();
-            var image = new Image();
-            image.width = "500px";
-            image.height = "428px";
-            image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
-            $("#watch").append('<img id="iimg" src="' + image.src + '" style="max-width:500px;max-heigth:428px;" />');
-        }
-        function Down() {
-            var sampleImage = document.getElementById("iimg");
-            if (sampleImage == null) {
-                layer.msg("请先预览效果图（点击ShowImg） ");
-                return false;
-            }
-            var canvas = convertImageToCanvas(sampleImage);
+</div>
+<div id="watch" style="text-align:center;">
+    <a id="tttt"></a>
+</div>
 
-            url = canvas.toDataURL("image/png");//PNG格式
-            //以下代码为下载此图片功能
-            var triggerDownload = $("#tttt").attr("href", url).attr("download", "设计图" + new Date().getMilliseconds() + ".png");
-            triggerDownload[0].click();
-            //triggerDownload.remove();
+<!--显示与下载png-->
+<script type="text/javascript">
+
+    $(function () {
+        //字体更改选择
+        $("#font-family").change(function () {
+            var input = $("#addBox").text("");
+            var logovalue = $("#logovalue").val();
+            var font_family = $(this).find("option:selected").text();
+            var font_size = $("#font-size option:selected").text();
+
+            var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
+            // alert(font_family + " " + lable);
+            $("#addBox").append(lable);
+        });
+
+        //字体大小更改选择
+        $("#font-size").change(function () {
+            var input = $("#addBox").text("");
+            var logovalue = $("#logovalue").val();
+            var font_family = $("#font-family option:selected").text();
+            var font_size = $(this).find("option:selected").text();
+
+            var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
+            // alert(font_family + " " + lable);
+            $("#addBox").append(lable);
+        });
+    })
+
+    //输入文字logo，更改logo区域
+    function OnInput (event) {
+        // alert ("The new content: " + event.target.value);
+        var logovalue = event.target.value;
+        var font_family = $("#font-family option:selected").text();
+        var font_size = $("#font-size").find("option:selected").text();
+
+        var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
+        var input = $("#addBox").text("");
+        input.append(lable);
+    }
+
+    function Show() {
+        var svgXml = $('.svggroup').html();
+        var image = new Image();
+        image.width = "500px";
+        image.height = "428px";
+        image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+        $("#watch").append('<img id="iimg" src="' + image.src + '" style="max-width:500px;max-heigth:428px;" />');
+    }
+
+    function Down() {
+        var sampleImage = document.getElementById("iimg");
+        if (sampleImage == null) {
+            layer.msg("请先预览效果图（点击ShowImg） ");
+            return false;
         }
-        function convertImageToCanvas(image) {
-            var canvas = document.createElement("canvas");
-            canvas.width = image.width * 1.5;
-            canvas.height = image.height * 1.5;
-            canvas.getContext("2d").drawImage(image, 0, 0);
-            return canvas;
-        }
-    </script>
+        var canvas = convertImageToCanvas(sampleImage);
+
+        url = canvas.toDataURL("image/png");//PNG格式
+        //以下代码为下载此图片功能
+        var triggerDownload = $("#tttt").attr("href", url).attr("download", "设计图" + new Date().getMilliseconds() + ".png");
+        triggerDownload[0].click();
+        //triggerDownload.remove();
+    }
+
+    function convertImageToCanvas(image) {
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width * 1.5;
+        canvas.height = image.height * 1.5;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        return canvas;
+    }
+</script>
 </body>
 </html>
