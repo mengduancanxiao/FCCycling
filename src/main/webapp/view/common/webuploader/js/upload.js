@@ -3,43 +3,43 @@
     $(function () {
         var $wrap = $('#uploader'),
 
-        // 图片容器
+            // 图片容器
             $queue = $('<ul class="filelist"></ul>')
                 .appendTo($wrap.find('.queueList')),
 
-        // 状态栏，包括进度和控制按钮
+            // 状态栏，包括进度和控制按钮
             $statusBar = $wrap.find('.statusBar'),
 
-        // 文件总体选择信息。
+            // 文件总体选择信息。
             $info = $statusBar.find('.info'),
 
-        // 上传按钮
+            // 上传按钮
             $upload = $wrap.find('.uploadBtn'),
 
-        // 没选择文件之前的内容。
+            // 没选择文件之前的内容。
             $placeHolder = $wrap.find('.placeholder'),
 
             $progress = $statusBar.find('.progress').hide(),
 
-        // 添加的文件数量
+            // 添加的文件数量
             fileCount = 0,
 
-        // 添加的文件总大小
+            // 添加的文件总大小
             fileSize = 0,
 
-        // 优化retina, 在retina下这个值是2
+            // 优化retina, 在retina下这个值是2
             ratio = window.devicePixelRatio || 1,
 
-        // 缩略图大小
+            // 缩略图大小
             thumbnailWidth = 110 * ratio,
             thumbnailHeight = 110 * ratio,
 
-        // 可能有pedding, ready, uploading, confirm, done.
+            // 可能有pedding, ready, uploading, confirm, done.
             state = 'pedding',
 
-        // 所有文件的进度信息，key为file id
+            // 所有文件的进度信息，key为file id
             percentages = {},
-        // 判断浏览器是否支持图片的base64
+            // 判断浏览器是否支持图片的base64
             isSupportBase64 = (function () {
                 var data = new Image();
                 var support = true;
@@ -52,7 +52,7 @@
                 return support;
             })(),
 
-        // 检测是否已经安装flash，检测flash的版本
+            // 检测是否已经安装flash，检测flash的版本
             flashVersion = (function () {
                 var version;
 
@@ -62,7 +62,7 @@
                 } catch (ex) {
                     try {
                         version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
-                                .GetVariable('$version');
+                            .GetVariable('$version');
                     } catch (ex2) {
                         version = '0.0';
                     }
@@ -74,15 +74,15 @@
             supportTransition = (function () {
                 var s = document.createElement('p').style,
                     r = 'transition' in s ||
-                            'WebkitTransition' in s ||
-                            'MozTransition' in s ||
-                            'msTransition' in s ||
-                            'OTransition' in s;
+                        'WebkitTransition' in s ||
+                        'MozTransition' in s ||
+                        'msTransition' in s ||
+                        'OTransition' in s;
                 s = null;
                 return r;
             })(),
 
-        // WebUploader实例
+            // WebUploader实例
             uploader,
             GUID = WebUploader.Base.guid(); //当前页面是生成的GUID作为标示
 
@@ -111,7 +111,7 @@
                     var swf = '/test/js/expressInstall.swf';
                     // insert flash object
                     var html = '<object type="application/' +
-                            'x-shockwave-flash" data="' + swf + '" ';
+                        'x-shockwave-flash" data="' + swf + '" ';
 
                     if (WebUploader.browser.ie) {
                         html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
@@ -121,7 +121,7 @@
                         '<param name="movie" value="' + swf + '" />' +
                         '<param name="wmode" value="transparent" />' +
                         '<param name="allowscriptaccess" value="always" />' +
-                    '</object>';
+                        '</object>';
 
                     container.html(html);
 
@@ -156,7 +156,7 @@
             disableGlobalDnd: true,
             threads: 1, //上传并发数
             //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
-            formData: { guid: GUID },
+            formData: {guid: GUID},
             fileNumLimit: 300,
             compress: false, //图片在上传前不进行压缩
             fileSizeLimit: 200 * 1024 * 1024,    // 200 M
@@ -168,7 +168,7 @@
             var denied = false,
                 len = items.length,
                 i = 0,
-            // 修改js类型
+                // 修改js类型
                 unAllowed = 'text/plain;application/javascript ';
 
             for (; i < len; i++) {
@@ -209,10 +209,10 @@
         // 当有文件添加进来时执行，负责view的创建
         function addFile(file) {
             var $li = $('<li id="' + file.id + '">' +
-                    '<p class="title">' + file.name + '</p>' +
-                    '<p class="imgWrap"></p>' +
-                    '<p class="progress"><span></span></p>' +
-                    '</li>'),
+                '<p class="title">' + file.name + '</p>' +
+                '<p class="imgWrap"></p>' +
+                '<p class="progress"><span></span></p>' +
+                '</li>'),
 
                 $btns = $('<div class="file-panel">' +
                     '<span class="cancel">删除</span>' +
@@ -307,11 +307,11 @@
             });
 
             $li.on('mouseenter', function () {
-                $btns.stop().animate({ height: 30 });
+                $btns.stop().animate({height: 30});
             });
 
             $li.on('mouseleave', function () {
-                $btns.stop().animate({ height: 0 });
+                $btns.stop().animate({height: 0});
             });
 
             $btns.on('click', 'span', function () {
@@ -341,7 +341,7 @@
                         'transform': deg
                     });
                 } else {
-                    $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~ ~((file.rotation / 90) % 4 + 4) % 4) + ')');
+                    $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
                     // use jquery animate to rotation
                     // $({
                     //     rotation: rotation
@@ -398,8 +398,7 @@
             var text = '', stats;
 
             if (state === 'ready') {
-                text = '选中' + fileCount + '张图片，共' +
-                        WebUploader.formatSize(fileSize) + '。';
+                text = '选中' + fileCount + '张图片，共' + WebUploader.formatSize(fileSize) + '。';
             } else if (state === 'confirm') {
                 stats = uploader.getStats();
                 if (stats.uploadFailNum) {
@@ -409,21 +408,16 @@
 
             } else {
                 stats = uploader.getStats();
-                text = '共' + fileCount + '张（' +
-                        WebUploader.formatSize(fileSize) +
-                        '），已上传' + stats.successNum + '张';
-
+                text = '共' + fileCount + '张（' + WebUploader.formatSize(fileSize) + '），已上传' + stats.successNum + '张';
                 if (stats.uploadFailNum) {
                     text += '，失败' + stats.uploadFailNum + '张';
                 }
             }
-
             $info.html(text);
         }
 
         function setState(val) {
             var file, stats;
-
             if (val === state) {
                 return;
             }
@@ -439,7 +433,6 @@
                     $statusBar.addClass('element-invisible');
                     uploader.refresh();
                     break;
-
                 case 'ready':
                     $placeHolder.addClass('element-invisible');
                     $('#filePicker2').removeClass('element-invisible');
@@ -447,18 +440,15 @@
                     $statusBar.removeClass('element-invisible');
                     uploader.refresh();
                     break;
-
                 case 'uploading':
                     $('#filePicker2').addClass('element-invisible');
                     $progress.show();
                     $upload.text('暂停上传');
                     break;
-
                 case 'paused':
                     $progress.show();
                     $upload.text('继续上传');
                     break;
-
                 case 'confirm':
                     $progress.hide();
                     $('#filePicker2').removeClass('element-invisible');
@@ -481,7 +471,6 @@
                     }
                     break;
             }
-
             updateStatus();
         }
 
@@ -544,15 +533,15 @@
         // 文件上传成功,合并文件。
         uploader.on('uploadSuccess', function (file, response) {
             if (response.chunked) {
-                $.post("/API/PC/Plug/UpLoad.ashx?action=MergeFiles", { guid: GUID, fileExt: response.f_ext },
-                function (data) {
-                    data = $.parseJSON(data);
-                    if (data.hasError) {
-                        alert('文件合并失败！');
-                    } else {
-                        alert(decodeURIComponent(data.savePath));
-                    }
-                });
+                $.post("/API/PC/Plug/UpLoad.ashx?action=MergeFiles", {guid: GUID, fileExt: response.f_ext},
+                    function (data) {
+                        data = $.parseJSON(data);
+                        if (data.hasError) {
+                            alert('文件合并失败！');
+                        } else {
+                            alert(decodeURIComponent(data.savePath));
+                        }
+                    });
             }
         });
 
