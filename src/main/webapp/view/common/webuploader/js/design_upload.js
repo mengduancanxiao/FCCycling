@@ -100,7 +100,7 @@ function webuploadInit(t) {
         fileSingleSizeLimit: fileSingleSize   // 100 M
     });
 
-    // 添加“添加文件”的按钮，
+    // 添加"添加文件"的按钮，
     uploader.addButton({
         id: '#filePicker2',
         label: '继续添加'
@@ -445,7 +445,7 @@ function webuploadInit(t) {
         updateStatus();
     }
 
-    uploader.onUploadProgress = function (file, percentage) {
+    uploader.onUploadProgress = function (file, percentage ) {
         var $li = $('#' + file.id),
             $percent = $li.find('.progress span');
 
@@ -454,7 +454,9 @@ function webuploadInit(t) {
         updateTotalProgress();
     };
 
+    //弹出框选择完图片后处理逻辑
     uploader.onFileQueued = function (file) {
+        console.log("size = " + file.size + " filecount = " + fileCount);
         fileCount++;
         fileSize += file.size;
 
@@ -463,8 +465,8 @@ function webuploadInit(t) {
             $statusBar.show();
         }
 
-        addFile(file);
-        setState('ready');
+        addFile(file);      //生成图片
+        setState('ready');  //设置状态
         updateTotalProgress();
     };
 
@@ -543,7 +545,6 @@ function webuploadInit(t) {
         if ($(this).hasClass('disabled')) {
             return false;
         }
-
         if (state === 'ready') {
             uploader.upload();
         } else if (state === 'paused') {
