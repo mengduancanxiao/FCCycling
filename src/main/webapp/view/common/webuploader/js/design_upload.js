@@ -8,6 +8,17 @@ var fileCount = 0; // 添加的文件数量
 var fileSize = 0; // 添加的文件总大小
 var picList = new Array(); //初始绑定的图片列表
 var picList_source = new Array(); //初始绑定的图片原名
+var addBoxSize = 0;
+
+function getAddBoxSize() {
+    var addBoxSize = 0;
+    var divArr = $('#addBoxes').children('div');
+    $.each(divArr, function (i, n) {
+        addBoxSize = i;
+    });
+    return addBoxSize;
+}
+
 function webuploadInit(t) {
     if (t != null) {
         uptype = t;
@@ -109,7 +120,9 @@ function webuploadInit(t) {
 
     // 当有文件添加进来时执行，负责view的创建
     function addFile(file) {
-        console.log(file);
+        // console.log("fileCount = " + fileCount + " addBoxSize = " + addBoxSize);
+
+
         var $li = $('<li id="' + file.id + '">' +
             '<p class="title">' + file.name + '</p>' +
             '<p class="imgWrap"></p>' +
@@ -153,14 +166,17 @@ function webuploadInit(t) {
                     return;
                 }
                 var count = $(".filelist").find("li").length;
+                console.log("filelist size = " + count);
+
+
                 var img = $(' <img src="' + src + '" /> ');
                 //var img = $('<div id="box1" class="box"> <img src="' + src + '" /> <div id="scale1" class="scale"></div> </div>');
                 $wrap.empty().append(img);
 
                 var html = '<div id="box' + count + '" class="box">  <img src="' + src + '" />  <div id="scale' + count + '" class="scale"></div> </div>';
-                $("#addBox").append(html);
+                $("#addBox" + count).append(html);
                 var box = document.getElementById("box" + count);
-                var fa = document.getElementById('addBox');
+                var fa = document.getElementById('addBox' + +count);
                 var scale = document.getElementById("scale" + count);
                 // 图片移动效果
                 box.onmousedown = function (ev) {
@@ -245,7 +261,6 @@ function webuploadInit(t) {
 
             // 成功
             if (cur === 'error' || cur === 'invalid') {
-                console.log(file.statusText);
                 showError(file.statusText);
                 percentages[file.id][1] = 1;
             } else if (cur === 'interrupt') {
@@ -445,7 +460,7 @@ function webuploadInit(t) {
         updateStatus();
     }
 
-    uploader.onUploadProgress = function (file, percentage ) {
+    uploader.onUploadProgress = function (file, percentage) {
         var $li = $('#' + file.id),
             $percent = $li.find('.progress span');
 
@@ -457,6 +472,10 @@ function webuploadInit(t) {
     //弹出框选择完图片后处理逻辑
     uploader.onFileQueued = function (file) {
         console.log("size = " + file.size + " filecount = " + fileCount);
+        if (fileCount >= addBoxSize) {
+            alert("上传图片数不能大于logo区域数");
+            return;
+        }
         fileCount++;
         fileSize += file.size;
 
@@ -464,6 +483,7 @@ function webuploadInit(t) {
             $placeHolder.addClass('element-invisible');
             $statusBar.show();
         }
+
 
         addFile(file);      //生成图片
         setState('ready');  //设置状态

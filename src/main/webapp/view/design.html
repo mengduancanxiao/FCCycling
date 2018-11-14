@@ -217,17 +217,16 @@
     </header>
 
     <div>
-        <div style="width: 99%; height: 468px; float: left; margin: 5px; text-align: center;" id="father"
-             class="father">
+        <div style="width: 99%; height: 468px; float: left; margin: 5px; text-align: center;" id="father" class="father">
             <!-- Left -->
-            <div style="float:left; width: 40%;height: 533px; border:thin solid black; text-align:center;">
+            <div id="addBoxes" style="float:left; width: 40%;height: 533px; border:thin solid black; text-align:center;">
                 <!--<div style="float:left; width: 500px;height: 433px;"></div>-->
                 <div id="clothes"
                      style="width: 500px;height: 429px; background:url(images/all-1.png);margin:0 auto;position: relative;z-index: 1;"></div>
-                <div id="addBox"
-                     style="margin-top:-320px; margin-left:220px; position: relative; z-index: 2;width: 40px;height: 30px;border:solid thin black;"></div>
+                <div id="addBox1"
+                     style="margin-top:-320px; margin-left:220px; position: relative; z-index: 2;width: 40px;height: 30px;border:solid thin black;">1</div>
                 <div id="addBox2"
-                     style="margin-top:-20px; margin-left:425px; position: relative; z-index: 3;width: 70px;height: 60px;border:solid thin black;"></div>
+                     style="margin-top:-20px; margin-left:425px; position: relative; z-index: 3;width: 70px;height: 60px;border:solid thin black;">2</div>
 
             </div>
             <!-- Middle -->
@@ -354,6 +353,7 @@
             // alert(font_family + " " + lable);
             $("#addBox").append(lable);
         });
+        addBoxSize = getAddBoxSize(); //logo填充div数量
     })
 
     //输入文字logo，更改logo区域
