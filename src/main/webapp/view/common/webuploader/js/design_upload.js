@@ -183,7 +183,7 @@ function webuploadInit(t) {
                 }
                 $("#" + addBox).append(html);
 
-                // console.log("file length = " + uploader.getFile("WU_FILE_1").size);
+                // console.log("file length = " + uploader.getFile("WU_FILE_0").size);
 
                 var box = document.getElementById("Box_" + file.id);
                 var fa = document.getElementById(addBox);
@@ -657,4 +657,3 @@ function downFile(name) {
     //location.href = url;
     window.open(url);
 }
-
