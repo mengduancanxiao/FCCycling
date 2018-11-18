@@ -149,11 +149,21 @@
         function resetTabs(obj, name) {
             if (name == ".tab1_1") {
                 $(".tab1_2").hide();
+                $(".tab1_3").hide();
                 $(".tabs").find("li:first a").addClass("current");
+                $(".tabs").find("li:eq(1) a").removeClass("current");
+                $(".tabs").find("li:last a").removeClass("current");
+            } else if(name == ".tab1_2"){
+                $(".tab1_1").hide();
+                $(".tab1_3").hide();
+                $(".tabs").find("li:first a").removeClass("current");
+                $(".tabs").find("li:eq(1) a").addClass("current");
                 $(".tabs").find("li:last a").removeClass("current");
             } else {
                 $(".tab1_1").hide();
+                $(".tab1_2").hide();
                 $(".tabs").find("li:first a").removeClass("current");
+                $(".tabs").find("li:eq(1) a").removeClass("current");
                 $(".tabs").find("li:last a").addClass("current");
             }
             $(name).fadeIn();
@@ -224,10 +234,9 @@
                 <div id="clothes"
                      style="width: 500px;height: 429px; background:url(images/all-1.png);margin:0 auto;position: relative;z-index: 1;"></div>
                 <div id="addBox1"
-                     style="margin-top:-320px; margin-left:220px; position: relative; z-index: 2;width: 40px;height: 30px;border:solid thin black;">1</div>
+                     style="margin-top:-320px; margin-left:220px; position: relative; z-index: 2;width: 40px;height: 30px;border:solid thin black;"></div>
                 <div id="addBox2"
-                     style="margin-top:-20px; margin-left:425px; position: relative; z-index: 3;width: 70px;height: 60px;border:solid thin black;">2</div>
-
+                     style="margin-top:-20px; margin-left:425px; position: relative; z-index: 3;width: 70px;height: 60px;border:solid thin black;"></div>
             </div>
             <!-- Middle -->
             <!--<div style="float:left; width: 150px; height: 429px;background-color: white;">
@@ -236,7 +245,8 @@
             <div style="float:left; width: 60%; height: 533px; border:thin solid black;  border-left: none;">
                 <ul class="tabs">
                     <li><a href="#" name=".tab1_1">Change Colors</a></li>
-                    <li><a href="#" name=".tab1_2">Change Logo</a></li>
+                    <li><a href="#" name=".tab1_2">Change Picture Logo</a></li>
+                    <li><a href="#" name=".tab1_3">Change Character Logo</a></li>
                 </ul>
                 <div class="content">
                     <div class="tab1_1">
@@ -248,14 +258,6 @@
                             <li>Neck finish 领边</li>
                             <li>Leg opening 脚口</li>
                         </ul>
-
-                        <!--<div class="colordiv" style="background-color: red;" onClick="clickcolor('red');"></div>
-                        <div class="colordiv" style="background-color: yellow;" onClick="clickcolor('yellow');"></div>
-                        <div class="colordiv" style="background-color: blue;" onClick="clickcolor('blue');"></div>
-                        <div class="colordiv" style="background-color: green;" onClick="clickcolor('green');"></div>
-                        <div class="colordiv" style="background-color: white;" onClick="clickcolor('white');"></div>
-                        <div class="colordiv" style="background-color: purple;" onClick="clickcolor('purple');"></div>
-                        <div class="colordiv" style="background-color: black;" onClick="clickcolor('black');"></div>-->
                     </div>
                     <div class="tab1_2">
                         <div class="page-container">
@@ -282,38 +284,39 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div id="method2">
-                                <div style="text-align: left"><label style="font-size: 30px;font-family: bold;">Method2:</label></div>
-                                <div id="method2-font" style="text-align: left; padding: 20px;">
-                                    <input id="logovalue" type="text" oninput="OnInput(event);" style="width:250px; border: thin solid black" placeholder="input your logo content"/>
-                                    <br/>
-                                    font-family:
-                                    <select id="font-family">
-                                        <option value="Calibri">Calibri</option>
-                                        <option value="Consolas" selected="selected">Consolas</option>
-                                        <option value="Times New Roman">Times New Roman</option>
-                                        <option value="Arial">Arial</option>
-                                    </select>
-                                    <br/>
-                                    font-size:
-                                    <select id="font-size">
-                                        <option value="10">10</option>
-                                        <option value="12" selected="selected">12</option>
-                                        <option value="14">14</option>
-                                        <option value="16">16</option>
-                                        <option value="18">18</option>
-                                        <option value="20">20</option>
-                                    </select>
-
-                                </div>
-                            </div>
                         </div>
                         <br/>
                         <span><a onclick='javascript: Show()'>ShowImg</a></span>
                         <br/>
                         <span><a onclick='javascript: Down()'>DownImg</a></span>
+                    </div>
 
+                    <div class="tab1_3">
+                        <div id="method2">
+                            <div style="text-align: left"><label style="font-size: 30px;font-family: bold;">Method2:</label></div>
+                            <div id="method2-font" style="text-align: left; padding: 20px;">
+                                logo-content:
+                                <input id="logovalue" type="text" oninput="OnInput(event);" style="width:250px; border: thin solid black" placeholder="input your logo content"/>
+                                <br/>
+                                font-family:
+                                <select id="font-family">
+                                    <option value="Calibri">Calibri</option>
+                                    <option value="Consolas" selected="selected">Consolas</option>
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Arial">Arial</option>
+                                </select>
+                                <br/>
+                                font-size:
+                                <select id="font-size">
+                                    <option value="10">10</option>
+                                    <option value="12" selected="selected">12</option>
+                                    <option value="14">14</option>
+                                    <option value="16">16</option>
+                                    <option value="18">18</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -332,39 +335,54 @@
     $(function () {
         //字体更改选择
         $("#font-family").change(function () {
-            var input = $("#addBox").text("");
+            var input = $("#addBox1").text("");
             var logovalue = $("#logovalue").val();
             var font_family = $(this).find("option:selected").text();
             var font_size = $("#font-size option:selected").text();
 
+
+
             var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
             // alert(font_family + " " + lable);
-            $("#addBox").append(lable);
+            $("#addBox1").append(lable);
         });
 
         //字体大小更改选择
         $("#font-size").change(function () {
-            var input = $("#addBox").text("");
+            var input = $("#addBox1").text("");
             var logovalue = $("#logovalue").val();
             var font_family = $("#font-family option:selected").text();
             var font_size = $(this).find("option:selected").text();
 
             var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
             // alert(font_family + " " + lable);
-            $("#addBox").append(lable);
+            $("#addBox1").append(lable);
         });
         addBoxSize = getAddBoxSize(); //logo填充div数量
-    })
+    });
 
     //输入文字logo，更改logo区域
     function OnInput (event) {
-        // alert ("The new content: " + event.target.value);
         var logovalue = event.target.value;
         var font_family = $("#font-family option:selected").text();
         var font_size = $("#font-size").find("option:selected").text();
 
+        var id = $("#addBox1").find("div").attr("id");
+        if(typeof id != "undefined" && id != null && id != ""){
+            var file_id = id.slice(4);
+            var file = uploader.getFile(file_id);
+            console.log("===================file_id = " + file_id + " " + file.id + " size = " + file.size);
+            fileCount--;
+            fileSize -= file.size;
+            if (!fileCount) {
+                setState('pedding');
+            }
+            removeFile(file);
+            updateTotalProgress();
+        }
+
         var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
-        var input = $("#addBox").text("");
+        var input = $("#addBox1").text("");
         input.append(lable);
     }
 

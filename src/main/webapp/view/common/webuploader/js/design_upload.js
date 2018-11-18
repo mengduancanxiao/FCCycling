@@ -121,8 +121,6 @@ function webuploadInit(t) {
     // 当有文件添加进来时执行，负责view的创建
     function addFile(file) {
         // console.log("fileCount = " + fileCount + " addBoxSize = " + addBoxSize);
-
-
         var $li = $('<li id="' + file.id + '">' +
             '<p class="title">' + file.name + '</p>' +
             '<p class="imgWrap"></p>' +
@@ -132,7 +130,9 @@ function webuploadInit(t) {
             $btns = $('<div class="file-panel">' +
                 '<span class="cancel">删除</span>' +
                 '<span class="rotateRight">向右旋转</span>' +
-                '<span class="rotateLeft">向左旋转</span><span class="down" onclick="downFile(\'' + file.name + '\')">下载</span></div>').appendTo($li),
+                '<span class="rotateLeft">向左旋转</span>' +
+                '<span class="down" onclick="downFile(\'' + file.name + '\')">下载</span>' +
+                '</div>').appendTo($li),
             $prgress = $li.find('p.progress span'),
             $wrap = $li.find('p.imgWrap'),
             $info = $('<p class="error"></p>'),
@@ -166,18 +166,28 @@ function webuploadInit(t) {
                     return;
                 }
                 var count = $(".filelist").find("li").length;
-                console.log("filelist size = " + count);
+                console.log("filelist size = " + count + " file_id = " + file.id);
 
-
-                var img = $(' <img src="' + src + '" /> ');
+                var img = $(' <img id="111" + src="' + src + '" /> ');
                 //var img = $('<div id="box1" class="box"> <img src="' + src + '" /> <div id="scale1" class="scale"></div> </div>');
                 $wrap.empty().append(img);
 
-                var html = '<div id="box' + count + '" class="box">  <img src="' + src + '" />  <div id="scale' + count + '" class="scale"></div> </div>';
-                $("#addBox" + count).append(html);
-                var box = document.getElementById("box" + count);
-                var fa = document.getElementById('addBox' + +count);
-                var scale = document.getElementById("scale" + count);
+                var html = '<div id="Box_' + file.id + '" class="box">  <img src="' + src + '" />  <div id="Scale_' + file.id + '" class="scale"></div> </div>';
+                var addBox;
+                if($("#addBox1").children("div").length == 0){
+                    addBox = "addBox1"
+                } else if($("#addBox2").children("div").length == 0){
+                    addBox = "addBox2";
+                } else{
+
+                }
+                $("#" + addBox).append(html);
+
+                // console.log("file length = " + uploader.getFile("WU_FILE_1").size);
+
+                var box = document.getElementById("Box_" + file.id);
+                var fa = document.getElementById(addBox);
+                var scale = document.getElementById("Scale_" + file.id);
                 // 图片移动效果
                 box.onmousedown = function (ev) {
                     var oEvent = ev;
@@ -341,6 +351,7 @@ function webuploadInit(t) {
     // 负责view的销毁
     function removeFile(file) {
         var $li = $('#' + file.id);
+        // console.log("$li" + $li + " #ss_" + file.id);
 
         delete percentages[file.id];
         updateTotalProgress();
@@ -348,6 +359,7 @@ function webuploadInit(t) {
 
         $("#s_" + file.id).remove();
         $("#ss_" + file.id).remove();
+        $("#Box_" + file.id).remove();//删除logo区域对应的图片
     }
 
     function updateTotalProgress() {
@@ -381,9 +393,7 @@ function webuploadInit(t) {
 
         } else {
             stats = uploader.getStats();
-            text = '共' + fileCount + '个文件（' +
-                WebUploader.formatSize(fileSize) +
-                '），已上传' + stats.successNum + '个';
+            text = '共' + fileCount + '个文件（' + WebUploader.formatSize(fileSize) + '），已上传' + stats.successNum + '个';
 
             if (stats.uploadFailNum) {
                 text += '，失败' + stats.uploadFailNum + '个';
@@ -471,25 +481,25 @@ function webuploadInit(t) {
 
     //弹出框选择完图片后处理逻辑
     uploader.onFileQueued = function (file) {
-        console.log("size = " + file.size + " filecount = " + fileCount);
+        // console.log("onFileQueued size = " + file.size + " filecount = " + fileCount);
         if (fileCount >= addBoxSize) {
             alert("上传图片数不能大于logo区域数");
-            return;
+        }else {
+            fileCount++;
+            fileSize += file.size;
+
+            if (fileCount > 0) {
+                $placeHolder.addClass('element-invisible');
+                $statusBar.show();
+            }
+
+            addFile(file);      //生成图片
+            setState('ready');  //设置状态
+            updateTotalProgress();
         }
-        fileCount++;
-        fileSize += file.size;
-
-        if (fileCount > 0) {
-            $placeHolder.addClass('element-invisible');
-            $statusBar.show();
-        }
-
-
-        addFile(file);      //生成图片
-        setState('ready');  //设置状态
-        updateTotalProgress();
     };
 
+    //点击删除图片后处理逻辑
     uploader.onFileDequeued = function (file) {
         fileCount--;
         fileSize -= file.size;
@@ -647,3 +657,4 @@ function downFile(name) {
     //location.href = url;
     window.open(url);
 }
+
