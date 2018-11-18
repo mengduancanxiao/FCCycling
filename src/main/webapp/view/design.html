@@ -60,7 +60,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             picList = new Array();
-            fileNum = 3;
+            fileNum = 2;
             webuploadInit(1);
         });
     </script>
@@ -340,8 +340,6 @@
             var font_family = $(this).find("option:selected").text();
             var font_size = $("#font-size option:selected").text();
 
-
-
             var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';
             // alert(font_family + " " + lable);
             $("#addBox1").append(lable);
@@ -372,13 +370,7 @@
             var file_id = id.slice(4);
             var file = uploader.getFile(file_id);
             console.log("===================file_id = " + file_id + " " + file.id + " size = " + file.size);
-            fileCount--;
-            fileSize -= file.size;
-            if (!fileCount) {
-                setState('pedding');
-            }
-            removeFile(file);
-            updateTotalProgress();
+            uploader.onFileDequeued(file);
         }
 
         var lable = '<label style="font-family: ' + font_family + ';font-size:' + font_size + 'px;">' + logovalue + '</label>';

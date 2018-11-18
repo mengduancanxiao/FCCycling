@@ -11,6 +11,7 @@ var picList_source = new Array(); //初始绑定的图片原名
 var addBoxSize = 0;
 
 function getAddBoxSize() {
+
     var addBoxSize = 0;
     var divArr = $('#addBoxes').children('div');
     $.each(divArr, function (i, n) {
@@ -482,21 +483,22 @@ function webuploadInit(t) {
     //弹出框选择完图片后处理逻辑
     uploader.onFileQueued = function (file) {
         // console.log("onFileQueued size = " + file.size + " filecount = " + fileCount);
-        if (fileCount >= addBoxSize) {
+        /*if (fileCount >= addBoxSize) {
             alert("上传图片数不能大于logo区域数");
         }else {
-            fileCount++;
-            fileSize += file.size;
 
-            if (fileCount > 0) {
-                $placeHolder.addClass('element-invisible');
-                $statusBar.show();
-            }
+        }*/
+        fileCount++;
+        fileSize += file.size;
 
-            addFile(file);      //生成图片
-            setState('ready');  //设置状态
-            updateTotalProgress();
+        if (fileCount > 0) {
+            $placeHolder.addClass('element-invisible');
+            $statusBar.show();
         }
+
+        addFile(file);      //生成图片
+        setState('ready');  //设置状态
+        updateTotalProgress();
     };
 
     //点击删除图片后处理逻辑
@@ -510,7 +512,6 @@ function webuploadInit(t) {
 
         removeFile(file);
         updateTotalProgress();
-
     };
 
     uploader.on('all', function (type) {
@@ -562,7 +563,7 @@ function webuploadInit(t) {
 
     uploader.onError = function (code) {
         if (code == "Q_EXCEED_NUM_LIMIT")
-            alert("上传文件数量超过" + fileNum + "个");
+            alert("上传文件数量不能超过" + fileNum + "个");
         else if (code == "Q_EXCEED_SIZE_LIMIT")
             alert("上传文件总大小超过" + fileAllSize + "KB");
         else if (code == "Q_TYPE_DENIED")
