@@ -167,7 +167,7 @@ function webuploadInit(t) {
                     return;
                 }
                 var count = $(".filelist").find("li").length;
-                console.log("filelist size = " + count + " file_id = " + file.id);
+                // console.log("filelist size = " + count + " file_id = " + file.id);
 
                 var img = $(' <img id="111" + src="' + src + '" /> ');
                 //var img = $('<div id="box1" class="box"> <img src="' + src + '" /> <div id="scale1" class="scale"></div> </div>');
