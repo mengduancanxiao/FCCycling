@@ -207,7 +207,7 @@
 
 
         //html2canvas
-        function Show(){
+        function Show2(){
             screenShot($('#addBoxes'),function (canvas,width,height) {
                 document.querySelector('#screenShotImg').src = canvas;
                 document.querySelector('#screenShotImg').style.width = width+"px";
@@ -329,7 +329,7 @@
                             </div>
                         </div>
                         <br/>
-                        <span><a onclick='javascript: Show()'>ShowImg</a></span>
+                        <span><a onclick='javascript: Show3()'>ShowImg</a></span>
                         <br/>
                         <span><a onclick='javascript: Down()'>DownImg</a></span>
                     </div>
@@ -413,7 +413,7 @@
         if(typeof id != "undefined" && id != null && id != ""){
             var file_id = id.slice(4);
             var file = uploader.getFile(file_id);
-            console.log("===================file_id = " + file_id + " " + file.id + " size = " + file.size);
+            // console.log("===================file_id = " + file_id + " " + file.id + " size = " + file.size);
             uploader.onFileDequeued(file);
         }
 
@@ -422,17 +422,52 @@
         input.append(lable);
     }
 
-    function Show2() {
-        var svgXml = $('.svggroup').html();
-        var image = new Image();
-        image.width = "500px";
-        image.height = "428px";
-        image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
-        $("#watch").append('<img id="iimg" src="' + image.src + '" style="max-width:500px;max-heigth:428px;" />');
+    function Show4() {
+        $("#watch").html("");
+        var svgXml = $('#addBoxes').html();
+
+        var data = "data:image/svg+xml," +
+            "<svg xmlns='http://www.w3.org/2000/svg' width='500' height='429'>" +
+            "<foreignObject width='100%' height='100%'>" +
+            "<div xmlns='http://www.w3.org/1999/xhtml' style='font-size:16px;font-family:Helvetica'>" +
+            svgXml +
+            "</div>" +
+            "</foreignObject>" +
+            "</svg>";
+        var img = new Image();
+        img.src = data;
+        $("#watch").append('<img id="iimg" src="' + img.src + '" style="max-width:500px;max-heigth:429px;" />');
+        // $("#watch").append(data);
+        // document.getElementsByTagName('body')[0].appendChild(img);
+        // console.log("data = " + window.btoa(unescape(encodeURIComponent(svgXml))));
+    }
+    
+    function Show3() {
+        $("#watch").html("");
+        var svgXml = $('#addBoxes').html();
+        var data = "data:image/svg+xml," +
+            "<svg xmlns='http://www.w3.org/2000/svg' width='500' height='429'>" +
+            "<foreignObject width='100%' height='100%'>" +
+            "<div xmlns='http://www.w3.org/1999/xhtml' style='font-size:16px;font-family:Helvetica'>" +
+            svgXml +
+            "</div>" +
+            "</foreignObject>" +
+            "</svg>";
+        
+        console.log("data = " + data);
+        
+        
+        // image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(data))); //给图片对象写入base64编码的svg流
+        $("#watch").append('<img id="iimg" src="' + data + '" />');
+        // $("#watch").append(data);
+        
+        // var image = new Image();
+        // image.src = data;
+        // $("#watch").append(image);
     }
 
     function Down() {
-        var sampleImage = document.getElementById("iimg");
+        var sampleImage = $("#iimg");
         if (sampleImage == null) {
             layer.msg("请先预览效果图（点击ShowImg） ");
             return false;
