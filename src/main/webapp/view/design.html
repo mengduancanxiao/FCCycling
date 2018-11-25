@@ -32,12 +32,9 @@
     <!-- 调色板CSS -->
     <link rel="stylesheet" href="common/cxColor/css/jquery.cxcolor.css">
 
-    <!--canvasjs-->
-    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
-
-    <script type="text/javascript" src="js/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="common/jquery/jquery-latest.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/jquery183.min.js"></script>
+    <script type="text/javascript" src="common/jquery/jquery183.min.js"></script>
     <script type="text/javascript" src="js/responsiveslides.min.js"></script>
     <script type="text/javascript" src="js/lib/SyntaxHighlighter.js"></script>
     <script type="text/javascript" src="js/lib/raphael-min.js"></script>
@@ -45,10 +42,12 @@
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/xcConfirm.js" charset="utf-8"></script>
     <!-- layer JS -->
-    <script src="common/layer/layer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="common/layer/layer.js" charset="utf-8"></script>
     <!-- 调色板JS -->
     <script type="text/javascript" src="common/cxColor/js/jquery.cxcolor.js"></script>
-
+    <!--html2canvas-->
+    <script type="text/javascript" src="common/html2canvas/html2canvas.js"></script>
+    
     <!-- 上传控件start-->
     <link rel="stylesheet" type="text/css" href="common/webuploader/css/webuploader.css"/>
     <link rel="stylesheet" type="text/css" href="common/webuploader/css/design_upload.css"/>
@@ -206,6 +205,50 @@
             });
         }
 
+
+        //html2canvas
+        function aaa(){
+            screenShot($('#targetDom'),function (canvas,width,height) {
+                document.querySelector('#screenShotImg').src = canvas;
+                document.querySelector('#screenShotImg').style.width = width+"px";
+                document.querySelector('#screenShotImg').style.height = height+"px";
+            });
+        }
+
+        /**
+         * 截图功能
+         * targetDom 要克隆的目标dom元素
+         * cb 回调函数
+         */
+        function screenShot(targetDom,cb){
+            var copyDom = targetDom.clone();//克隆dom节点
+            copyDom.css('display','block');
+            $('body').append(copyDom);//把copy的截图对象追加到body后面
+            var width = copyDom.width();//dom宽
+            var height = copyDom.height();//dom高
+            var scale = 2;//放大倍数
+            var canvas = document.createElement('canvas');
+            canvas.width = width*scale;//canvas宽度
+            canvas.height = height*scale;//canvas高度
+            var content = canvas.getContext("2d");
+            content.scale(scale,scale);
+            var rect = copyDom.get(0).getBoundingClientRect();//获取元素相对于视察的偏移量
+            content.translate(-rect.left,-rect.top);//设置context位置，值为相对于视窗的偏移量负值，让图片复位
+            html2canvas(copyDom, {
+                allowTaint:true,
+                tainTest:true,
+                scale:scale,
+                canvas:canvas,
+                width:width,
+                heigth:height,
+                onrendered: function(canvas) {
+                    if(cb){
+                        copyDom.css('display','none');
+                        cb(canvas.toDataURL("image/png"),width,height);
+                    }
+                }
+            });
+        }
     </script>
 </head>
 <body style="background-color: white;">
