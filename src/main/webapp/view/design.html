@@ -20,27 +20,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/zerogrid.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsiveslides.css">
-    <link rel="stylesheet" href="css/tabStyle.css" type="text/css">
-    <link rel="stylesheet" href="css/design.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/zerogrid.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/responsiveslides.css">
+    <link rel="stylesheet" type="text/css" href="css/tabStyle.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/design.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/SyntaxHighlighter.css">
     <link rel="stylesheet" type="text/css" href="css/clothes.css">
     <link rel="stylesheet" type="text/css" href="css/xcConfirm.css"/>
 
     <!-- 调色板CSS -->
-    <link rel="stylesheet" href="common/cxColor/css/jquery.cxcolor.css">
+    <link rel="stylesheet" type="text/css" href="common/cxColor/css/jquery.cxcolor.css">
 
     <script type="text/javascript" src="common/jquery/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="common/svgmap/script.js"></script>
     <script type="text/javascript" src="common/jquery/jquery183.min.js"></script>
-    <script type="text/javascript" src="js/responsiveslides.min.js"></script>
-    <script type="text/javascript" src="js/lib/SyntaxHighlighter.js"></script>
-    <script type="text/javascript" src="js/lib/raphael-min.js"></script>
-    <script type="text/javascript" src="js/res/clothesMapConfig.js"></script>
-    <script type="text/javascript" src="js/map.js"></script>
-    <script type="text/javascript" src="js/xcConfirm.js" charset="utf-8"></script>
+    <script type="text/javascript" src="common/svgmap/responsiveslides.min.js"></script>
+    <script type="text/javascript" src="common/svgmap/lib/SyntaxHighlighter.js"></script>
+    <script type="text/javascript" src="common/svgmap/lib/raphael-min.js"></script>
+    <script type="text/javascript" src="common/svgmap/res/clothesMapConfig.js"></script>
+    <script type="text/javascript" src="common/svgmap/map.js"></script>
+    <script type="text/javascript" src="common/svgmap/xcConfirm.js" charset="utf-8"></script>
     <!-- layer JS -->
     <script type="text/javascript" src="common/layer/layer.js" charset="utf-8"></script>
     <!-- 调色板JS -->
@@ -191,7 +191,7 @@
             //在这里面输入任何合法的js语句
             layer.open({
                 type: 2, //Page层类型
-                area: ['310px', '300px'],
+                area: ['310px', '310px'],
                 title: 'select color',
                 shade: 0.6, //遮罩透明度
                 anim: 1, //0-6的动画形式，-1不开启
@@ -207,8 +207,8 @@
 
 
         //html2canvas
-        function aaa(){
-            screenShot($('#targetDom'),function (canvas,width,height) {
+        function Show(){
+            screenShot($('#addBoxes'),function (canvas,width,height) {
                 document.querySelector('#screenShotImg').src = canvas;
                 document.querySelector('#screenShotImg').style.width = width+"px";
                 document.querySelector('#screenShotImg').style.height = height+"px";
@@ -370,6 +370,7 @@
 </div>
 <div id="watch" style="text-align:center;">
     <a id="tttt"></a>
+    <img id="screenShotImg" alt="">
 </div>
 
 <!--显示与下载png-->
@@ -421,7 +422,7 @@
         input.append(lable);
     }
 
-    function Show() {
+    function Show2() {
         var svgXml = $('.svggroup').html();
         var image = new Image();
         image.width = "500px";
