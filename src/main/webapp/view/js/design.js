@@ -57,6 +57,9 @@ function Show4() {
         "</div>" +
         "</foreignObject>" +
         "</svg>";
+    
+    
+    
     var img = new Image();
     img.src = data;
     $("#watch").append('<img id="iimg" src="' + img.src + '" style="max-width:500px;max-heigth:429px;" />');
@@ -67,7 +70,9 @@ function Show4() {
 
 function Show3() {
     $("#watch").html("");
+    $("#watch").append('<a id="tttt"></a>');
     var svgXml = $('#addBoxes').html();
+    var svgXml2 = $('.svggroup').html();
     var data = "data:image/svg+xml," +
         "<svg xmlns='http://www.w3.org/2000/svg' width='500' height='429'>" +
         "<foreignObject width='100%' height='100%'>" +
@@ -79,27 +84,32 @@ function Show3() {
         "</foreignObject>" +
         "</svg>";
 
+    data = data.replace("addBoxes","addBoxes_d").replace("clothes","clothes_d").replace("addBox1","addBox1_d").replace("addBox2","addBox2_d");
     // console.log("data = " + data);
 
-    // //旧版图片预览
+    //旧版图片预览
     // var svgXml2 = $('.svggroup').html();
     // var image = new Image();
     // image.width = "500px";
     // image.height = "428px";
     // image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml2))); //给图片对象写入base64编码的svg流
-    // $("#watch").append('<img id="iimg" src="' + image.src + '" style="max-width:500px;max-heigth:428px;" />');
+    // $("#watch").append('<a id="tttt"></a><img id="downloadImg" src="' + image.src + '" style="max-width:500px;max-heigth:428px;" />');
 
     //新版图片预览
-    $("#watch").append('<img id="iimg" src="' + data + '" />');
+    // $("#watch").append('<a id="tttt"></a><img id="downloadImg" src="' + data + '" />');
     // $("#watch").append(data);
 
-    // var image = new Image();
-    // image.src = data;
-    // $("#watch").append(image);
+    //新版图片预览2
+    var image = new Image();
+    image.width = "500px";
+    image.height = "428px";
+    image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml2))); //给图片对象写入base64编码的svg流
+    $("#watch").append('<img id="downloadImg" src="' + image.src + '" style="max-width:500px;max-heigth:428px;" />');
 }
 
 function Down() {
-    var sampleImage = $("#iimg");
+    // var sampleImage = $("#downloadImg");
+    var sampleImage = document.getElementById('downloadImg');
     if (sampleImage == null) {
         layer.msg("请先预览效果图（点击ShowImg） ");
         return false;
@@ -114,7 +124,7 @@ function Down() {
 }
 
 function convertImageToCanvas(image) {
-    console.log(image.html());
+    // console.log(image.html());
     var canvas = document.createElement("canvas");
     canvas.width = image.width * 1.5;
     canvas.height = image.height * 1.5;

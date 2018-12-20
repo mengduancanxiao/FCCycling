@@ -9,21 +9,30 @@
     <script type="text/javascript" src="common/html2canvas/html2canvas.js"></script>
 
     <script type="text/javascript">
-        // var canvas = document.createElement("canvas");
-        // canvas.width = image.width * 1.5;
-        // canvas.height = image.height * 1.5;
-        //
-        //
-        // var ctx = canvas.getContext("2d");
-        // var image = document.getElementById('source');
-        //
-        // ctx.drawImage(image, 33, 71, 104, 124, 21, 20, 87, 104);
+        $(function () {
+            var img = $("#img_1");
+            img.attr("src","images/13.jpg");
+            // var img = new Image();
+            // img.src = "images/all-1.png";
+            console.log(111 + " " + img.attr("src"));
+
+            var canvas = document.createElement("canvas");
+            // var image = document.createElement("img");
+
+            canvas.width = img.width * 1.5;
+            canvas.height = img.height * 1.5;
+
+            var ctx = canvas.getContext("2d");
+
+            // var image = document.getElementById('source');
+            //
+            ctx.drawImage(img, 0, 0);
+        });
     </script>
 </head>
 <body>
 <canvas id="canvas"></canvas>
-<div style="display:none;">
-    <img id="source" src="images/all-1.png" style="width: 500px; height: 429px"/>
-</div>
+<!--<img id="img_1" src="images/all-1.png" style="width: 500px; height: 429px"/>-->
+<img id="img_1" style="width: 500px; height: 429px"/>
 </body>
 </html>

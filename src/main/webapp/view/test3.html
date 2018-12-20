@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<!--此网页演示了html2canvas网页截图下载 -->	
+	<head>
+		<!-- jquery库和html2canvas库 -->
+		<script type="text/javascript" src="jquery183.min.js"></script>
+		<script type="text/javascript" src="html2canvas.js" charset="utf-8"></script>
+		<script type="text/javascript" src="rgbcolor.js" charset="utf-8"></script>
+		<script type="text/javascript" src="canvg.js" charset="utf-8"></script>
+		<title>html2canvas网页截图</title>
+	
+		<!--需要注意的是,这里一定要等待js库和网页加载完毕后再执行函数  -->
+		<!-- html2canvas()中,第一个参数是要截图的Dom对象，第二个参数时渲染完成后回调的canvas对象。  -->		
+		<script type="text/javascript">
+			$(function(){	
+				print();
+			});
+			
+			function svg2canvas(){
+				//以下是对svg的处理
+				var nodesToRecover = [];
+				var nodesToRemove = [];
+				
+				var svgElem = $("#canv").find('svg');//divReport为需要截取成图片的dom的id
+				//console.log(svgElem.html());
+				
+				svgElem.each(function (index, node) {
+					var parentNode = node.parentNode.parentNode;
+					var svg = node.outerHTML.trim();
+					console.log(node.parentNode);
+
+					var canvas = document.createElement('canvas');
+					canvg(canvas, svg); 
+					if (node.style.position) {
+						canvas.style.position += node.style.position;
+						canvas.style.left += node.style.left;
+						canvas.style.top += node.style.top;
+					}
+
+					nodesToRecover.push({
+						parent: parentNode,
+						child: node
+					});
+					parentNode.removeChild(node.parentNode);
+
+					nodesToRemove.push({
+						parent: parentNode,
+						child: canvas
+					});
+
+					parentNode.appendChild(canvas);
+                });
+			}
+			
+			function print(){
+				svg2canvas();
+				html2canvas( $("#canv") ,{  		
+					onrendered: function(canvas){
+						$('#down_button').attr( 'href' , canvas.toDataURL() ) ;
+						$('#down_button').attr( 'download' , 'myjobdeer.png' ) ;
+					}
+				});
+			}
+		</script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div id="canv">
+			Cease to struggle and you cease to live.<br/>
+			<img src="haha.jpg" width="320" style="margin:0.5rem;" />
+			<div id="svgdiv">
+				<svg>
+				  <line x1="0"  y1="10" x2="0"   y2="100" style="stroke:#006600;"/>
+				  <line x1="10" y1="10" x2="100" y2="100" style="stroke:#006600;"/>
+				  <line x1="20" y1="10" x2="100" y2="50"  style="stroke:#006600;"/>
+				  <line x1="30" y1="10" x2="110" y2="10"  style="stroke:#006600;"/>
+				</svg>
+			</div>
+		</div>
+		<a type="button" id="down_button">download</a>
+	
+	</body>
+</html>

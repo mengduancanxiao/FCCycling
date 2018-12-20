@@ -47,7 +47,7 @@
     <script type="text/javascript" src="common/cxColor/js/jquery.cxcolor.js"></script>
     <!--html2canvas-->
     <script type="text/javascript" src="common/html2canvas/html2canvas.js"></script>
-    
+
     <!-- 上传控件start-->
     <link rel="stylesheet" type="text/css" href="common/webuploader/css/webuploader.css"/>
     <link rel="stylesheet" type="text/css" href="common/webuploader/css/design_upload.css"/>
@@ -154,7 +154,7 @@
                 $(".tabs").find("li:first a").addClass("current");
                 $(".tabs").find("li:eq(1) a").removeClass("current");
                 $(".tabs").find("li:last a").removeClass("current");
-            } else if(name == ".tab1_2"){
+            } else if (name == ".tab1_2") {
                 $(".tab1_1").hide();
                 $(".tab1_3").hide();
                 $(".tabs").find("li:first a").removeClass("current");
@@ -209,11 +209,11 @@
 
 
         //html2canvas
-        function Show2(){
-            screenShot($('#addBoxes'),function (canvas,width,height) {
+        function Show2() {
+            screenShot($('#addBoxes'), function (canvas, width, height) {
                 document.querySelector('#screenShotImg').src = canvas;
-                document.querySelector('#screenShotImg').style.width = width+"px";
-                document.querySelector('#screenShotImg').style.height = height+"px";
+                document.querySelector('#screenShotImg').style.width = width + "px";
+                document.querySelector('#screenShotImg').style.height = height + "px";
             });
         }
 
@@ -222,31 +222,36 @@
          * targetDom 要克隆的目标dom元素
          * cb 回调函数
          */
-        function screenShot(targetDom,cb){
+        function screenShot(targetDom, cb) {
             var copyDom = targetDom.clone();//克隆dom节点
-            copyDom.css('display','block');
+            var addbox = copyDom.html();
+            addbox = addbox.replace("addBoxes","addBoxes_d").replace("clothes","clothes_d").replace("addBox1","addBox1_d").replace("addBox2","addBox2_d");
+            copyDom.html(addbox);
+            
+            console.log(copyDom.html());
+            copyDom.css('display', 'block');
             $('body').append(copyDom);//把copy的截图对象追加到body后面
             var width = copyDom.width();//dom宽
             var height = copyDom.height();//dom高
             var scale = 2;//放大倍数
             var canvas = document.createElement('canvas');
-            canvas.width = width*scale;//canvas宽度
-            canvas.height = height*scale;//canvas高度
+            canvas.width = width * scale;//canvas宽度
+            canvas.height = height * scale;//canvas高度
             var content = canvas.getContext("2d");
-            content.scale(scale,scale);
+            content.scale(scale, scale);
             var rect = copyDom.get(0).getBoundingClientRect();//获取元素相对于视察的偏移量
-            content.translate(-rect.left,-rect.top);//设置context位置，值为相对于视窗的偏移量负值，让图片复位
+            content.translate(-rect.left, -rect.top);//设置context位置，值为相对于视窗的偏移量负值，让图片复位
             html2canvas(copyDom, {
-                allowTaint:true,
-                tainTest:true,
-                scale:scale,
-                canvas:canvas,
-                width:width,
-                heigth:height,
-                onrendered: function(canvas) {
-                    if(cb){
-                        copyDom.css('display','none');
-                        cb(canvas.toDataURL("image/png"),width,height);
+                allowTaint: true,
+                tainTest: true,
+                scale: scale,
+                canvas: canvas,
+                width: width,
+                heigth: height,
+                onrendered: function (canvas) {
+                    if (cb) {
+                        copyDom.css('display', 'none');
+                        cb(canvas.toDataURL("image/png"), width, height);
                     }
                 }
             });
@@ -331,9 +336,9 @@
                             </div>
                         </div>
                         <br/>
-                        <span><a onclick='javascript: Show3()'>ShowImg</a></span>
+                        <span><a onclick='javascript: Show2()'>查看图片</a></span>
                         <br/>
-                        <span><a onclick='javascript: Down()'>DownImg</a></span>
+                        <span><a onclick='javascript: Down()'>下载图片</a></span>
                     </div>
 
                     <div class="tab1_3">
@@ -371,7 +376,7 @@
 </div>
 <div id="watch" style="text-align:center;">
     <a id="tttt"></a>
-    <img id="screenShotImg" alt="">
+    <img id="screenShotImg" alt=""/>
 </div>
 </body>
 </html>
