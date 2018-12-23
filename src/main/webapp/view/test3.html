@@ -3,10 +3,10 @@
 	<!--此网页演示了html2canvas网页截图下载 -->	
 	<head>
 		<!-- jquery库和html2canvas库 -->
-		<script type="text/javascript" src="jquery183.min.js"></script>
-		<script type="text/javascript" src="html2canvas.js" charset="utf-8"></script>
-		<script type="text/javascript" src="rgbcolor.js" charset="utf-8"></script>
-		<script type="text/javascript" src="canvg.js" charset="utf-8"></script>
+		<script type="text/javascript" src="common/jquery/jquery183.min.js"></script>
+		<script type="text/javascript" src="common/html2canvas/html2canvas.js" charset="utf-8"></script>
+		<script type="text/javascript" src="common/canvg/rgbcolor.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="common/canvg/canvg.js" charset="utf-8"></script>
 		<title>html2canvas网页截图</title>
 	
 		<!--需要注意的是,这里一定要等待js库和网页加载完毕后再执行函数  -->
@@ -22,16 +22,19 @@
 				var nodesToRemove = [];
 				
 				var svgElem = $("#canv").find('svg');//divReport为需要截取成图片的dom的id
-				//console.log(svgElem.html());
+				// console.log(svgElem.html());
 				
 				svgElem.each(function (index, node) {
-					var parentNode = node.parentNode.parentNode;
-					var svg = node.outerHTML.trim();
-					console.log(node.parentNode);
+					var parentNode = node.parentNode.parentNode; //div id="canv"
+					// console.log(parentNode);
+					var svg = node.outerHTML.trim();			 //SVG包含本身节点HTML代码
+                    // console.log(svg);
 
 					var canvas = document.createElement('canvas');
-					canvg(canvas, svg); 
+					canvg(canvas, svg);
+
 					if (node.style.position) {
+                        console.log("position" + JSON.stringify(node.style));
 						canvas.style.position += node.style.position;
 						canvas.style.left += node.style.left;
 						canvas.style.top += node.style.top;
@@ -41,7 +44,9 @@
 						parent: parentNode,
 						child: node
 					});
+
 					parentNode.removeChild(node.parentNode);
+                    console.log(parentNode);
 
 					nodesToRemove.push({
 						parent: parentNode,
@@ -65,19 +70,27 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
-		<div id="canv">
-			Cease to struggle and you cease to live.<br/>
-			<img src="haha.jpg" width="320" style="margin:0.5rem;" />
-			<div id="svgdiv">
-				<svg>
-				  <line x1="0"  y1="10" x2="0"   y2="100" style="stroke:#006600;"/>
-				  <line x1="10" y1="10" x2="100" y2="100" style="stroke:#006600;"/>
-				  <line x1="20" y1="10" x2="100" y2="50"  style="stroke:#006600;"/>
-				  <line x1="30" y1="10" x2="110" y2="10"  style="stroke:#006600;"/>
+		Cease to struggle and you cease to live.<br/>
+		<div id="canv" style="width: 500px; height: 429px; background: url(images/all-1.png); margin: 0px auto; position: relative; z-index: 1; overflow: hidden;">
+
+			<!--<img src="images/2.jpg" width="320" style="margin:0.5rem;" />-->
+			<div id="svgdiv" >
+				<svg height="429" version="1.1" width="500" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;z-index: 2;" viewBox="0 0 500 429">
+				  <!--<line x1="0"  y1="10" x2="0"   y2="100" style="stroke:#006600;"/>-->
+				  <!--<line x1="10" y1="10" x2="100" y2="100" style="stroke:#006600;"/>-->
+				  <!--<line x1="20" y1="10" x2="100" y2="50"  style="stroke:#006600;"/>-->
+				  <!--<line x1="30" y1="10" x2="110" y2="10"  style="stroke:#006600;"/>-->
+				  <path style="cursor: pointer; stroke-linejoin: round;" fill="#ff0000" stroke="#f9fcfe" d="M133,80L126,75L109,83L103,86L97,90L90,96L85,100L80,105L74,112L69,120L65,127L60,136L63,136L66,137L68,138L70,139L72,140L75,142L76,143L78,145L80,147L82,150L83,153L98,141L102,124L107,112L112,103L117,95L123,88L128,84C128,84,133,79,133,80ZM172,80L183,89L189,96L195,106L202,123L206,140L221,153L222,149L224,146L228,143L231,141L234,139L237,138L239,137L244,136L236,122L231,114L225,107L219,100L210,93L202,87L192,82L177,74L172,80ZM377,74L372,74L358,80L347,86L334,96L322,108L313,121L304,136L310,143L316,148L321,151L328,153L343,140L344,129L346,119L352,104L360,93L368,83C368,83,377,73,377,74ZM417,74L422,74L433,78L441,82L449,87L455,92L464,100L471,108L479,118L490,137L485,142L481,146L475,149L465,152L451,140L450,131L448,119L442,107L436,96L431,89L425,82C425,82,417,73,417,74ZM47,18L24,23L18,23L18,91L26,91L46,96L52,88L57,83L62,80L68,77L75,75L84,73L97,71L96,60L96,56L98,54L101,50L87,45L72,39L64,35L57,30L52,26C52,26,47,17,47,18ZM286,91L286,23L277,23L269,21L258,18L253,26L249,29L243,33L235,37L221,43L203,50L207,54L209,59L209,64L207,70L223,73L232,76L240,79L247,83L252,88L258,96L269,94L279,92C279,92,286,90,286,91Z" stroke-width="1" stroke-linejoin="round"></path>
+				  <path style="cursor: pointer; stroke-linejoin: round;" fill="#a52a2a" stroke="#f9fcfe" d="M101,240L101,245L106,243L111,242L121,240L129,239L137,239L148,239L155,239L162,239L167,239L171,239L176,239L178,240C180,240,182,240,182,240L185,240L189,241L193,242L203,245L203,239L195,237L190,236L184,235L177,234L169,234L161,233L151,233L141,233L133,233L124,234L115,236C115,236,101,241,101,240Z" stroke-width="1" stroke-linejoin="round"></path>
+				  <path style="cursor: pointer; stroke-linejoin: round;" fill="#000000" stroke="#f9fcfe" d="M349,423L355,423L360,422L366,419L392,373L391,408L398,414L403,418L409,420L417,421L425,421L435,419L445,377L450,360L454,349L457,335L457,327L452,324L445,322L434,321L426,322L415,325L404,328L394,333L376,342L372,356L366,371L359,387L352,406L349,423Z" stroke-width="1" stroke-linejoin="round"></path>
+				  <path style="cursor: pointer; stroke-linejoin: round;" fill="#456789" stroke="#f9fcfe" d="M73,280L73,327L65,321L57,317L51,314L44,313L38,313L32,314L25,318L18,322L10,328L11,280L20,278L28,277L36,276L44,276L53,276L62,277L68,278C68,278,73,281,73,280ZM113,281L110,289L107,302L104,318L103,336L103,355L103,378L104,389L106,400L110,420L115,420L119,420L124,419L128,418L132,417L136,415L141,412L142,399L144,387L147,372L151,352L161,411L165,414L170,416L175,418L182,420L187,420L193,420L198,391L199,364L199,336L197,315L194,300L189,281L178,283L167,284L151,284L135,284L124,283C124,283,113,282,113,281Z" stroke-width="1" stroke-linejoin="round"></path>
 				</svg>
 			</div>
 		</div>
-		<a type="button" id="down_button">download</a>
-	
+		<br/>
+		<div>
+			<a type="button" id="down_button">download</a>
+		</div>
+
 	</body>
 </html>

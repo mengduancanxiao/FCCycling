@@ -11,7 +11,7 @@
 <head>
     <!-- Basic Page Needs -->
     <meta charset="utf-8">
-    <title>design</title>
+    <title>design-test2</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -33,13 +33,13 @@
     <link rel="stylesheet" type="text/css" href="common/cxColor/css/jquery.cxcolor.css">
 
     <script type="text/javascript" src="common/jquery/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="common/svgmap/script.js"></script>
     <script type="text/javascript" src="common/jquery/jquery183.min.js"></script>
-    <script type="text/javascript" src="common/svgmap/responsiveslides.min.js"></script>
+    <script type="text/javascript" src="common/svgmap/script.js"></script>
     <script type="text/javascript" src="common/svgmap/lib/SyntaxHighlighter.js"></script>
     <script type="text/javascript" src="common/svgmap/lib/raphael-min.js"></script>
-    <script type="text/javascript" src="common/svgmap/res/clothesMapConfig.js"></script>
     <script type="text/javascript" src="common/svgmap/map.js"></script>
+    <script type="text/javascript" src="common/svgmap/responsiveslides.min.js"></script>
+    <script type="text/javascript" src="common/svgmap/res/clothesMapConfig.js"></script>
     <script type="text/javascript" src="common/svgmap/xcConfirm.js" charset="utf-8"></script>
     <!-- layer JS -->
     <script type="text/javascript" src="common/layer/layer.js" charset="utf-8"></script>
@@ -146,12 +146,12 @@
         //html2canvas
         function Show2() {
             svg2canvas();
-            html2canvas( $("#father") ,{
+            /*html2canvas( $("#father") ,{
                 onrendered: function(canvas){
                     $('#down_button').attr( 'href' , canvas.toDataURL() ) ;
                     $('#down_button').attr( 'download' , 'myjobdeer.png' ) ;
                 }
-            });
+            });*/
         }
         
         function svg2canvas(){
@@ -159,28 +159,36 @@
             var nodesToRecover = [];
             var nodesToRemove = [];
 
+            // initcolor();
             var svgElem = $("#father").find('svg');//divReport为需要截取成图片的dom的id
-            // console.log(svgElem.html());
+            // console.log(svgElem[0].outerHTML);
 
             svgElem.each(function (index, node) {
-                var parentNode = node.parentNode;
-                console.log(parentNode);
-                var svg = node.outerHTML.trim();
+                console.log(index);
+                var parentNode = node.parentNode.parentNode;     //div id="clothes"
+                // console.log(parentNode);
+
+                var svg = node.outerHTML.trim();			     //SVG包含本身节点HTML代码
+                // console.log(svg);
 
                 var canvas = document.createElement('canvas');
                 canvg(canvas, svg);
                 if (node.style.position) {
+                    console.log("position" + JSON.stringify(node.style));
                     canvas.style.position += node.style.position;
                     canvas.style.left += node.style.left;
                     canvas.style.top += node.style.top;
                 }
 
+
                 nodesToRecover.push({
                     parent: parentNode,
                     child: node
                 });
-                
-                // parentNode.removeChild(node);
+
+
+                // console.log(parentNode.outerHTML);
+                parentNode.removeChild(node.parentNode);
 
                 nodesToRemove.push({
                     parent: parentNode,
